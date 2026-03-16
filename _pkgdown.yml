@@ -1,0 +1,48 @@
+url: https://r4sub.github.io/r4subusability/
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+  bslib:
+    primary: "#2C6DB5"
+
+navbar:
+  bg: light
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    github:
+      icon: fab fa-github
+      href: https://github.com/R4SUB/r4subusability
+      aria-label: GitHub
+
+home:
+  title: "r4subusability — Usability Indicators for R4SUB"
+  description: >
+    Usability pillar indicators for the R4SUB ecosystem. Assesses variable
+    label quality, Define-XML completeness, annotation coverage, and reviewer
+    guide presence.
+
+reference:
+  - title: "Configuration"
+    contents:
+      - usability_config_default
+  - title: "Individual Assessments"
+    contents:
+      - assess_label_quality
+      - assess_define_completeness
+      - assess_annotation_coverage
+      - assess_reviewer_guide
+  - title: "Master Function"
+    contents:
+      - usability_indicators
+  - title: "Summary & Display"
+    contents:
+      - usability_summary
+      - print.usability_result
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with
