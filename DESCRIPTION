@@ -1,0 +1,32 @@
+Package: r4subusability
+Title: Usability Indicators for Clinical Submission Readiness
+Version: 0.1.0
+Authors@R:
+    person("Pawan Rama", "Mali", email = "prm@outlook.in",
+           role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0001-7864-5819"))
+Description: Quantifies reviewer-experience and usability indicators for
+    clinical regulatory submissions. Assesses variable label quality,
+    Define-XML (Extensible Markup Language) completeness, dataset
+    annotation coverage, and reviewer guide presence. Emits standardised
+    R4SUB (R for Regulatory Submission) evidence table rows via
+    'r4subcore' for integration with 'r4subscore' and 'r4subprofile'.
+License: MIT + file LICENSE
+URL: https://github.com/R4SUB/r4subusability
+BugReports: https://github.com/R4SUB/r4subusability/issues
+Depends:
+    R (>= 4.2)
+Imports:
+    cli,
+    r4subcore,
+    rlang,
+    tibble
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3

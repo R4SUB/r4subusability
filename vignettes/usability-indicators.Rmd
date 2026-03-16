@@ -1,0 +1,274 @@
+---
+title: "Usability Indicators with r4subusability"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usability Indicators with r4subusability}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r library}
+library(r4subusability)
+```
+
+## The Usability Pillar
+
+The R4SUB framework organises submission-readiness evidence into four pillars:
+quality, traceability, risk, and **usability**. Usability measures how easy it
+is for a regulatory reviewer to understand and navigate your submission package
+— a dimension that all six major regulatory authority profiles allocate between
+15 % and 20 % of the total submission-readiness weight.
+
+`r4subusability` implements the four indicators that make up this pillar:
+
+| ID | Name | What it measures |
+|---|---|---|
+| U-001 | Variable Label Quality | Label presence, length, and content |
+| U-002 | Define-XML Completeness | Origin and derivation documentation |
+| U-003 | Annotation Coverage | Proportion of derived variables annotated |
+| U-004 | Reviewer Guide Presence | ADRG / SDRG detected in submission package |
+
+Every assessment function returns a validated R4SUB evidence table via
+`r4subcore::as_evidence()`, so the output is immediately compatible with the
+scoring and profiling layers.
+
+## Configuration: `usability_config_default()`
+
+All four indicators are driven by a shared configuration list. The defaults
+reflect the most common regulatory requirements, but you can override any
+element:
+
+```{r config}
+cfg <- usability_config_default()
+str(cfg)
+```
+
+Key parameters:
+
+- `label_min_chars` / `label_max_chars` — acceptable label length window
+  (default: 3–40 characters).
+- `required_origins` — origins that must have a derivation text
+  (`"Derived"`, `"Assigned"`).
+- `reviewer_guide_keywords` — strings that identify a reviewer guide asset
+  (`"ADRG"`, `"SDRG"`, `"reviewers_guide"`, `"reviewer_guide"`, `"ARG"`).
+- `weights` — relative indicator weights summing to 1.
+
+```{r config_weights}
+cfg$weights
+```
+
+## Run Context
+
+All assessment functions require a run context from `r4subcore`. A single
+context object is typically created once per pipeline execution:
+
+```{r ctx}
+ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
+```
+
+## U-001: Variable Label Quality (`assess_label_quality()`)
+
+`assess_label_quality()` checks every variable label for:
+
+- **Presence** — a missing or empty label is a `fail` with `severity = "high"`.
+- **Minimum length** — a label shorter than `label_min_chars` is a `warn`.
+- **Maximum length** — a label longer than `label_max_chars` is a `warn`.
+- **Otherwise** — `pass` with `severity = "info"` and `metric_value = 1`.
+
+```{r u001}
+meta_labels <- data.frame(
+  dataset  = c("ADSL",    "ADSL", "ADAE"),
+  variable = c("USUBJID", "AGE",  "AETERM"),
+  label    = c(
+    "Unique Subject Identifier",  # OK — 26 chars
+    "Age",                         # OK — 3 chars (at minimum)
+    ""                             # fail — empty label
+  ),
+  stringsAsFactors = FALSE
+)
+
+ev_label <- assess_label_quality(meta_labels, ctx)
+ev_label[, c("location", "result", "severity", "metric_value", "message")]
+```
+
+## U-002: Define-XML Completeness (`assess_define_completeness()`)
+
+`assess_define_completeness()` verifies that the Define-XML metadata is
+populated correctly. For variables whose `origin` is in `required_origins`, a
+non-empty `derivation` text is mandatory.
+
+```{r u002}
+meta_define <- data.frame(
+  dataset    = c("ADSL",    "ADSL",   "ADAE"),
+  variable   = c("USUBJID", "AGE",    "AETERM"),
+  label      = c(
+    "Unique Subject Identifier",
+    "Age",
+    "Adverse Event Term"
+  ),
+  origin     = c("CRF",     "Derived", "CRF"),
+  derivation = c(NA,        "Derived from BRTHDTC and RFSTDTC", NA),
+  codelist   = c(NA,        NA,        NA),
+  stringsAsFactors = FALSE
+)
+
+ev_define <- assess_define_completeness(meta_define, ctx)
+ev_define[, c("location", "result", "severity", "message")]
+```
+
+USUBJID and AETERM come from CRF — no derivation required, both pass. AGE is
+`"Derived"` and has a derivation text, so it also passes.
+
+A variable with `origin = "Derived"` but no derivation text would fail:
+
+```{r u002_fail}
+meta_bad <- data.frame(
+  dataset    = "ADSL",
+  variable   = "TRTEDT",
+  label      = "Treatment End Date",
+  origin     = "Derived",
+  derivation = NA_character_,
+  stringsAsFactors = FALSE
+)
+ev_bad <- assess_define_completeness(meta_bad, ctx)
+ev_bad[, c("location", "result", "severity", "message")]
+```
+
+## U-003: Annotation Coverage (`assess_annotation_coverage()`)
+
+`assess_annotation_coverage()` works at the **dataset level**. For each
+dataset it computes what proportion of derived variables have non-empty
+derivation text:
+
+- `>= 90 %` → `pass`
+- `70 – 89 %` → `warn`
+- `< 70 %` → `fail`
+
+```{r u003}
+meta_annot <- data.frame(
+  dataset    = c("ADSL",   "ADSL",   "ADSL",   "ADAE",   "ADAE"),
+  variable   = c("AGE",    "SEX",    "TRTEDT", "AESTDTC","AEENDTC"),
+  origin     = c("Derived","CRF",    "Derived","CRF",    "CRF"),
+  derivation = c(
+    "Derived from BRTHDTC and RFSTDTC",
+    NA,                                   # CRF — not counted
+    NA,                                   # Derived but not documented
+    NA,                                   # CRF — not counted
+    NA                                    # CRF — not counted
+  ),
+  stringsAsFactors = FALSE
+)
+
+ev_annot <- assess_annotation_coverage(meta_annot, ctx)
+ev_annot[, c("asset_id", "result", "metric_value", "message")]
+```
+
+ADSL has 2 derived variables, only 1 annotated → 50 % → `fail`. ADAE has no
+derived variables so coverage is not applicable (`na`).
+
+## U-004: Reviewer Guide Presence (`assess_reviewer_guide()`)
+
+`assess_reviewer_guide()` checks a character vector of asset names for any
+keyword that matches `reviewer_guide_keywords` (case-insensitive substring
+match). It returns a single evidence row.
+
+```{r u004_pass}
+# Submission package includes an ADRG
+ev_guide_pass <- assess_reviewer_guide(
+  assets = c("ADRG", "define.xml", "datasets"),
+  ctx    = ctx
+)
+ev_guide_pass[, c("result", "severity", "message")]
+```
+
+```{r u004_fail}
+# Submission package is missing a reviewer guide
+ev_guide_fail <- assess_reviewer_guide(
+  assets = c("define.xml", "datasets"),
+  ctx    = ctx
+)
+ev_guide_fail[, c("result", "severity", "message")]
+```
+
+## Master Function: `usability_indicators()`
+
+`usability_indicators()` runs all four assessments in a single call and returns
+one combined evidence table:
+
+```{r master}
+meta_full <- data.frame(
+  dataset    = c("ADSL",    "ADSL",    "ADAE"),
+  variable   = c("USUBJID", "AGE",     "AETERM"),
+  label      = c(
+    "Unique Subject Identifier",
+    "Age",
+    "Adverse Event Term"
+  ),
+  origin     = c("CRF",     "Derived", "CRF"),
+  derivation = c(NA, "Derived from BRTHDTC and RFSTDTC", NA),
+  stringsAsFactors = FALSE
+)
+
+assets <- c("ADRG", "define.xml")
+
+ev_all <- usability_indicators(meta_full, assets = assets, ctx = ctx)
+
+# One row per variable per indicator, plus one row for the reviewer guide
+nrow(ev_all)
+table(ev_all$indicator_id, ev_all$result)
+```
+
+## Summary and Print Method
+
+`usability_summary()` produces a structured `usability_result` object with
+per-indicator pass/fail/warn counts and an overall score. The `print` method
+renders a colour-coded console report:
+
+```{r summary}
+res <- usability_summary(ev_all)
+print(res)
+```
+
+You can also access the underlying summary data frame programmatically:
+
+```{r summary_df}
+res$summary[, c("indicator_id", "indicator_name", "n_pass", "n_fail", "pct_pass")]
+```
+
+## Customising the Configuration
+
+Override specific defaults without replacing the entire list:
+
+```{r custom_config, eval = FALSE}
+cfg_strict <- usability_config_default()
+cfg_strict$label_min_chars <- 5L   # stricter minimum length
+cfg_strict$label_max_chars <- 30L  # tighter maximum
+
+ev_strict <- assess_label_quality(meta_full, ctx, config = cfg_strict)
+```
+
+## Integration with the R4SUB Ecosystem
+
+The evidence table returned by any `r4subusability` function plugs directly
+into the rest of the R4SUB pipeline:
+
+```r
+# Downstream — illustrative, requires r4subscore and r4subprofile
+score  <- r4subscore::compute_score(ev_all)
+report <- r4subprofile::render_profile(score, authority = "FDA")
+```
+
+Evidence can also be persisted for audit trails:
+
+```{r persist, eval = FALSE}
+tmp <- tempfile(fileext = ".rds")
+r4subcore::export_evidence(ev_all, tmp, format = "rds")
+ev_reloaded <- r4subcore::import_evidence(tmp, format = "rds")
+```

@@ -1,0 +1,4 @@
+*.tar.gz
+.claude/
+*.Rproj
+.Rproj.user/
