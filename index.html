@@ -54,8 +54,85 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
-Quantifies reviewer-experience and usability indicators for clinical regulatory submissions. Assesses variable label quality, Define-XML (Extensible Markup Language) completeness, dataset annotation coverage, and reviewer guide presence. Emits standardised R4SUB (R for Regulatory Submission) evidence table rows via 'r4subcore' for integration with 'r4subscore' and 'r4subprofile'.
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="r4subusability">r4subusability<a class="anchor" aria-label="anchor" href="#r4subusability"></a>
+</h1></div>
+<!-- badges: start -->
+
+<p><strong>r4subusability</strong> is the usability pillar package in the <a href="https://github.com/R4SUB" class="external-link">R4SUB</a> ecosystem. It quantifies reviewer-experience indicators for clinical regulatory submissions, assessing variable label quality, Define-XML completeness, dataset annotation coverage, and reviewer guide presence.</p>
+<p>Evidence rows emitted by r4subusability follow the standard R4SUB schema defined in <code>r4subcore</code>, making them directly compatible with <code>r4subscore</code> (SCI scoring) and <code>r4subprofile</code> (authority-specific profiling).</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"r4subusability"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r4sub.github.io/r4subusability/">r4subusability</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Build a minimal metadata data frame</span></span>
+<span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  dataset  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="st">"ADAE"</span><span class="op">)</span>,</span>
+<span>  variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span>, <span class="st">"AETERM"</span><span class="op">)</span>,</span>
+<span>  label    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Unique Subject Identifier"</span>, <span class="st">"Reported Term for the Adverse Event"</span><span class="op">)</span>,</span>
+<span>  origin   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Assigned"</span>, <span class="st">"CRF"</span><span class="op">)</span>,</span>
+<span>  type     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"text"</span>, <span class="st">"text"</span><span class="op">)</span>,</span>
+<span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/usability_indicators.html">usability_indicators</a></span><span class="op">(</span><span class="va">meta</span>, study_id <span class="op">=</span> <span class="st">"STUDY-001"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/usability_summary.html">usability_summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="indicators">Indicators<a class="anchor" aria-label="anchor" href="#indicators"></a>
+</h2>
+<table class="table">
+<colgroup>
+<col width="29%">
+<col width="32%">
+<col width="38%">
+</colgroup>
+<thead><tr class="header">
+<th>Function</th>
+<th>Indicator</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code><a href="reference/assess_label_quality.html">assess_label_quality()</a></code></td>
+<td>U-001</td>
+<td>Variable label length and format</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/assess_define_completeness.html">assess_define_completeness()</a></code></td>
+<td>U-002</td>
+<td>Define-XML field completeness</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/assess_annotation_coverage.html">assess_annotation_coverage()</a></code></td>
+<td>U-003</td>
+<td>Dataset annotation coverage</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/assess_reviewer_guide.html">assess_reviewer_guide()</a></code></td>
+<td>U-004</td>
+<td>Reviewer guide presence</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="links">Links<a class="anchor" aria-label="anchor" href="#links"></a>
+</h2>
+<ul>
+<li><a href="https://r4sub.github.io/r4subusability/">Documentation</a></li>
+<li><a href="https://r4sub.github.io/r4sub/" class="external-link">R4SUB ecosystem</a></li>
+</ul>
+</div>
+</div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
@@ -88,7 +165,12 @@ Quantifies reviewer-experience and usability indicators for clinical regulatory 
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://CRAN.R-project.org/package=r4subusability" class="external-link"><img src="https://www.r-pkg.org/badges/version/r4subusability" alt="CRAN status"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
