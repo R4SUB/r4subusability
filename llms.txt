@@ -1,15 +1,13 @@
 # r4subusability
 
-**r4subusability** is the usability pillar package in the
-[R4SUB](https://github.com/R4SUB) ecosystem. It quantifies
-reviewer-experience indicators for clinical regulatory submissions,
-assessing variable label quality, Define-XML completeness, dataset
-annotation coverage, and reviewer guide presence.
+**r4subusability** is the usability pillar package in the R4SUB
+ecosystem. It quantifies reviewer-experience indicators for clinical
+regulatory submissions, assessing variable label quality, Define-XML
+completeness, dataset annotation coverage, and reviewer guide presence.
 
-Evidence rows emitted by r4subusability follow the standard R4SUB schema
-defined in `r4subcore`, making them directly compatible with
-`r4subscore` (SCI scoring) and `r4subprofile` (authority-specific
-profiling).
+Evidence rows follow the standard R4SUB schema from `r4subcore`, making
+them directly compatible with `r4subscore` (SCI scoring) and
+`r4subprofile` (authority-specific profiling).
 
 ## Installation
 
@@ -17,12 +15,17 @@ profiling).
 install.packages("r4subusability")
 ```
 
-## Usage
+Development version:
+
+``` r
+pak::pak(c("R4SUB/r4subcore", "R4SUB/r4subusability"))
+```
+
+## Quick Start
 
 ``` r
 library(r4subusability)
 
-# Build a minimal metadata data frame
 meta <- data.frame(
   dataset  = c("ADSL", "ADAE"),
   variable = c("USUBJID", "AETERM"),
@@ -36,7 +39,7 @@ results <- usability_indicators(meta, study_id = "STUDY-001")
 usability_summary(results)
 ```
 
-## Indicators
+## Usability Indicators
 
 | Function                                                                                                         | Indicator | Description                      |
 |------------------------------------------------------------------------------------------------------------------|-----------|----------------------------------|
@@ -45,10 +48,21 @@ usability_summary(results)
 | [`assess_annotation_coverage()`](https://r4sub.github.io/r4subusability/reference/assess_annotation_coverage.md) | U-003     | Dataset annotation coverage      |
 | [`assess_reviewer_guide()`](https://r4sub.github.io/r4subusability/reference/assess_reviewer_guide.md)           | U-004     | Reviewer guide presence          |
 
-## Links
+## Key Functions
 
-- [Documentation](https://r4sub.github.io/r4subusability/)
-- [R4SUB ecosystem](https://r4sub.github.io/r4sub/)
+| Function                                                                                                         | Purpose                                        |
+|------------------------------------------------------------------------------------------------------------------|------------------------------------------------|
+| [`usability_config_default()`](https://r4sub.github.io/r4subusability/reference/usability_config_default.md)     | Default usability thresholds and configuration |
+| [`usability_indicators()`](https://r4sub.github.io/r4subusability/reference/usability_indicators.md)             | Run all four usability indicators in one call  |
+| [`assess_label_quality()`](https://r4sub.github.io/r4subusability/reference/assess_label_quality.md)             | Check variable label quality (U-001)           |
+| [`assess_define_completeness()`](https://r4sub.github.io/r4subusability/reference/assess_define_completeness.md) | Check Define-XML completeness (U-002)          |
+| [`assess_annotation_coverage()`](https://r4sub.github.io/r4subusability/reference/assess_annotation_coverage.md) | Check annotation coverage (U-003)              |
+| [`assess_reviewer_guide()`](https://r4sub.github.io/r4subusability/reference/assess_reviewer_guide.md)           | Check reviewer guide presence (U-004)          |
+| [`usability_summary()`](https://r4sub.github.io/r4subusability/reference/usability_summary.md)                   | Tidy summary of usability results              |
+
+## License
+
+MIT
 
 # Package index
 
