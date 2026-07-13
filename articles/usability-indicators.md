@@ -1,6 +1,7 @@
 # Usability Indicators with r4subusability
 
 ``` r
+
 library(r4subusability)
 ```
 
@@ -35,6 +36,7 @@ defaults reflect the most common regulatory requirements, but you can
 override any element:
 
 ``` r
+
 cfg <- usability_config_default()
 str(cfg)
 #> List of 5
@@ -61,6 +63,7 @@ Key parameters:
 - `weights` — relative indicator weights summing to 1.
 
 ``` r
+
 cfg$weights
 #> $label_quality
 #> [1] 0.3
@@ -81,8 +84,9 @@ All assessment functions require a run context from `r4subcore`. A
 single context object is typically created once per pipeline execution:
 
 ``` r
+
 ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#> ℹ Run context created: "R4S-20260316173100-wl4dieex"
+#> ℹ Run context created: "R4S-20260713142119-wl4dieex"
 ```
 
 ## U-001: Variable Label Quality (`assess_label_quality()`)
@@ -100,6 +104,7 @@ checks every variable label for:
   `metric_value = 1`.
 
 ``` r
+
 meta_labels <- data.frame(
   dataset  = c("ADSL",    "ADSL", "ADAE"),
   variable = c("USUBJID", "AGE",  "AETERM"),
@@ -128,6 +133,7 @@ variables whose `origin` is in `required_origins`, a non-empty
 `derivation` text is mandatory.
 
 ``` r
+
 meta_define <- data.frame(
   dataset    = c("ADSL",    "ADSL",   "ADAE"),
   variable   = c("USUBJID", "AGE",    "AETERM"),
@@ -157,6 +163,7 @@ AGE is `"Derived"` and has a derivation text, so it also passes.
 A variable with `origin = "Derived"` but no derivation text would fail:
 
 ``` r
+
 meta_bad <- data.frame(
   dataset    = "ADSL",
   variable   = "TRTEDT",
@@ -183,6 +190,7 @@ proportion of derived variables have non-empty derivation text:
 - `< 70 %` → `fail`
 
 ``` r
+
 meta_annot <- data.frame(
   dataset    = c("ADSL",   "ADSL",   "ADSL",   "ADAE",   "ADAE"),
   variable   = c("AGE",    "SEX",    "TRTEDT", "AESTDTC","AEENDTC"),
@@ -216,6 +224,7 @@ checks a character vector of asset names for any keyword that matches
 a single evidence row.
 
 ``` r
+
 # Submission package includes an ADRG
 ev_guide_pass <- assess_reviewer_guide(
   assets = c("ADRG", "define.xml", "datasets"),
@@ -228,6 +237,7 @@ ev_guide_pass[, c("result", "severity", "message")]
 ```
 
 ``` r
+
 # Submission package is missing a reviewer guide
 ev_guide_fail <- assess_reviewer_guide(
   assets = c("define.xml", "datasets"),
@@ -246,6 +256,7 @@ runs all four assessments in a single call and returns one combined
 evidence table:
 
 ``` r
+
 meta_full <- data.frame(
   dataset    = c("ADSL",    "ADSL",    "ADAE"),
   variable   = c("USUBJID", "AGE",     "AETERM"),
@@ -288,6 +299,7 @@ pass/fail/warn counts and an overall score. The `print` method renders a
 colour-coded console report:
 
 ``` r
+
 res <- usability_summary(ev_all)
 print(res)
 #> 
@@ -306,6 +318,7 @@ print(res)
 You can also access the underlying summary data frame programmatically:
 
 ``` r
+
 res$summary[, c("indicator_id", "indicator_name", "n_pass", "n_fail", "pct_pass")]
 #> # A tibble: 4 × 5
 #>   indicator_id indicator_name          n_pass n_fail pct_pass
@@ -321,6 +334,7 @@ res$summary[, c("indicator_id", "indicator_name", "n_pass", "n_fail", "pct_pass"
 Override specific defaults without replacing the entire list:
 
 ``` r
+
 cfg_strict <- usability_config_default()
 cfg_strict$label_min_chars <- 5L   # stricter minimum length
 cfg_strict$label_max_chars <- 30L  # tighter maximum
@@ -334,6 +348,7 @@ The evidence table returned by any `r4subusability` function plugs
 directly into the rest of the R4SUB pipeline:
 
 ``` r
+
 # Downstream — illustrative, requires r4subscore and r4subprofile
 score  <- r4subscore::compute_score(ev_all)
 report <- r4subprofile::render_profile(score, authority = "FDA")
@@ -342,6 +357,7 @@ report <- r4subprofile::render_profile(score, authority = "FDA")
 Evidence can also be persisted for audit trails:
 
 ``` r
+
 tmp <- tempfile(fileext = ".rds")
 r4subcore::export_evidence(ev_all, tmp, format = "rds")
 ev_reloaded <- r4subcore::import_evidence(tmp, format = "rds")

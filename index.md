@@ -12,18 +12,21 @@ them directly compatible with `r4subscore` (SCI scoring) and
 ## Installation
 
 ``` r
+
 install.packages("r4subusability")
 ```
 
 Development version:
 
 ``` r
+
 pak::pak(c("R4SUB/r4subcore", "R4SUB/r4subusability"))
 ```
 
 ## Quick Start
 
 ``` r
+
 library(r4subusability)
 
 meta <- data.frame(
@@ -41,24 +44,24 @@ usability_summary(results)
 
 ## Usability Indicators
 
-| Function                                                                                                         | Indicator | Description                      |
-|------------------------------------------------------------------------------------------------------------------|-----------|----------------------------------|
-| [`assess_label_quality()`](https://r4sub.github.io/r4subusability/reference/assess_label_quality.md)             | U-001     | Variable label length and format |
-| [`assess_define_completeness()`](https://r4sub.github.io/r4subusability/reference/assess_define_completeness.md) | U-002     | Define-XML field completeness    |
-| [`assess_annotation_coverage()`](https://r4sub.github.io/r4subusability/reference/assess_annotation_coverage.md) | U-003     | Dataset annotation coverage      |
-| [`assess_reviewer_guide()`](https://r4sub.github.io/r4subusability/reference/assess_reviewer_guide.md)           | U-004     | Reviewer guide presence          |
+| Function | Indicator | Description |
+|----|----|----|
+| [`assess_label_quality()`](https://r4sub.github.io/r4subusability/reference/assess_label_quality.md) | U-001 | Variable label length and format |
+| [`assess_define_completeness()`](https://r4sub.github.io/r4subusability/reference/assess_define_completeness.md) | U-002 | Define-XML field completeness |
+| [`assess_annotation_coverage()`](https://r4sub.github.io/r4subusability/reference/assess_annotation_coverage.md) | U-003 | Dataset annotation coverage |
+| [`assess_reviewer_guide()`](https://r4sub.github.io/r4subusability/reference/assess_reviewer_guide.md) | U-004 | Reviewer guide presence |
 
 ## Key Functions
 
-| Function                                                                                                         | Purpose                                        |
-|------------------------------------------------------------------------------------------------------------------|------------------------------------------------|
-| [`usability_config_default()`](https://r4sub.github.io/r4subusability/reference/usability_config_default.md)     | Default usability thresholds and configuration |
-| [`usability_indicators()`](https://r4sub.github.io/r4subusability/reference/usability_indicators.md)             | Run all four usability indicators in one call  |
-| [`assess_label_quality()`](https://r4sub.github.io/r4subusability/reference/assess_label_quality.md)             | Check variable label quality (U-001)           |
-| [`assess_define_completeness()`](https://r4sub.github.io/r4subusability/reference/assess_define_completeness.md) | Check Define-XML completeness (U-002)          |
-| [`assess_annotation_coverage()`](https://r4sub.github.io/r4subusability/reference/assess_annotation_coverage.md) | Check annotation coverage (U-003)              |
-| [`assess_reviewer_guide()`](https://r4sub.github.io/r4subusability/reference/assess_reviewer_guide.md)           | Check reviewer guide presence (U-004)          |
-| [`usability_summary()`](https://r4sub.github.io/r4subusability/reference/usability_summary.md)                   | Tidy summary of usability results              |
+| Function | Purpose |
+|----|----|
+| [`usability_config_default()`](https://r4sub.github.io/r4subusability/reference/usability_config_default.md) | Default usability thresholds and configuration |
+| [`usability_indicators()`](https://r4sub.github.io/r4subusability/reference/usability_indicators.md) | Run all four usability indicators in one call |
+| [`assess_label_quality()`](https://r4sub.github.io/r4subusability/reference/assess_label_quality.md) | Check variable label quality (U-001) |
+| [`assess_define_completeness()`](https://r4sub.github.io/r4subusability/reference/assess_define_completeness.md) | Check Define-XML completeness (U-002) |
+| [`assess_annotation_coverage()`](https://r4sub.github.io/r4subusability/reference/assess_annotation_coverage.md) | Check annotation coverage (U-003) |
+| [`assess_reviewer_guide()`](https://r4sub.github.io/r4subusability/reference/assess_reviewer_guide.md) | Check reviewer guide presence (U-004) |
+| [`usability_summary()`](https://r4sub.github.io/r4subusability/reference/usability_summary.md) | Tidy summary of usability results |
 
 ## License
 
