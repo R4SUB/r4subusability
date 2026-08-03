@@ -1,0 +1,92 @@
+---
+title: "Case study: reviewer experience from ADaM metadata"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Case study: reviewer experience from ADaM metadata}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+A submission can be technically correct and still be hard to review. Missing
+labels, undocumented derivations, thin annotations, and a missing reviewer guide
+all slow a reviewer down, and a slow review is a risk. `r4subusability` scores
+this reviewer experience directly, on the same evidence footing as quality and
+risk.
+
+This case study builds a Define-XML style metadata view from the example CDISC
+pilot metadata in `r4subdata`, then measures it.
+
+```{r libs, message = FALSE}
+library(r4subusability)
+library(r4subdata)
+```
+
+## Building a Define-style view
+
+The usability checks read metadata with an `origin` and, for derived variables,
+a `derivation`. The example ADaM metadata does not carry those yet, but the trace
+mapping does: a direct copy is a predecessor, anything with a real derivation
+rule is derived. Joining the two gives a realistic Define-style table.
+
+```{r meta}
+meta <- adam_metadata
+
+key <- paste(meta$dataset, meta$variable)
+mk  <- paste(trace_mapping$adam_dataset, trace_mapping$adam_var)
+idx <- match(key, mk)
+has <- !is.na(idx)
+deriv <- trace_mapping$derivation_text[idx]
+
+meta$origin <- "Assigned"
+meta$origin[has & grepl("Direct copy", deriv)]  <- "Predecessor"
+meta$origin[has & !grepl("Direct copy", deriv)] <- "Derived"
+meta$derivation <- NA_character_
+meta$derivation[has] <- deriv[has]
+
+head(meta[, c("dataset", "variable", "label", "origin", "derivation")], 6)
+```
+
+## Measuring usability
+
+`usability_indicators()` runs the four checks and returns evidence rows. The
+`assets` argument is the list of submission documents present, which is how the
+reviewer guide check knows whether the guide was shipped.
+
+```{r indicators}
+ctx <- r4subcore::r4sub_run_context(study_id = "CDISCPILOT01",
+                                    environment = "UAT")
+
+ev <- usability_indicators(
+  meta,
+  assets = c("adrg.pdf", "define.xml"),
+  ctx = ctx
+)
+
+nrow(ev)
+table(ev$indicator_name, ev$result)
+```
+
+## Reading the result
+
+`usability_summary()` turns those rows into the reviewer-facing picture: pass
+rates per check and an overall usability score.
+
+```{r summary}
+usability_summary(ev)
+```
+
+The pattern here is typical. Labels are complete and the reviewer guide is
+present, but annotation coverage on derived variables is thin. That is a precise,
+actionable finding: document the derivations for the variables the check flags,
+and the score moves.
+
+## Where it goes
+
+These rows are ordinary R4SUB evidence. They flow into the Usability pillar of
+the Submission Confidence Index next to quality, trace, and risk. Reviewer
+experience stops being a soft concern raised late and becomes a measured input
+to the readiness decision.
