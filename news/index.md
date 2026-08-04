@@ -2,6 +2,10 @@
 
 ## r4subusability (development version)
 
+- Add vignette: “Case study: reviewer experience from ADaM metadata”,
+  which builds a Define-style view from the example CDISC pilot metadata
+  in `r4subdata` and measures its usability.
+
 - Clarified the package DESCRIPTION: “R4SUB” expands to “Ready for
   Submission” (previously “R for Regulatory Submission”, inconsistent
   with the rest of the ecosystem).

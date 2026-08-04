@@ -2,8 +2,9 @@ pandoc: 3.8.3
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
+  case-study-reviewer-experience: case-study-reviewer-experience.html
   usability-indicators: usability-indicators.html
-last_built: 2026-07-13T14:21Z
+last_built: 2026-08-04T13:33Z
 urls:
   reference: https://r4sub.github.io/r4subusability/reference
   article: https://r4sub.github.io/r4subusability/articles
