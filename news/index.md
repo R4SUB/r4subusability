@@ -1,6 +1,6 @@
 # Changelog
 
-## r4subusability (development version)
+## r4subusability 0.2.0
 
 - Add vignette: “Case study: reviewer experience from ADaM metadata”,
   which builds a Define-style view from the example CDISC pilot metadata
