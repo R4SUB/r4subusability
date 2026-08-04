@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/R4SUB/r4subusability/blob/v0.2.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/R4SUB/r4subusability/blob/main/DESCRIPTION)
 
 Mali P (2026). *r4subusability: Usability Indicators for Clinical
 Submission Readiness*. R package version 0.2.0,
