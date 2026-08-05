@@ -6,7 +6,7 @@ printing or for passing to downstream reporting functions.
 ## Usage
 
 ``` r
-usability_summary(evidence)
+usability_summary(evidence, config = NULL)
 ```
 
 ## Arguments
@@ -16,6 +16,13 @@ usability_summary(evidence)
   A validated evidence tibble from
   [`usability_indicators()`](https://r4sub.github.io/r4subusability/reference/usability_indicators.md)
   or any of the individual assessment functions.
+
+- config:
+
+  A configuration list from
+  [`usability_config_default()`](https://r4sub.github.io/r4subusability/reference/usability_config_default.md),
+  used for the per-indicator weights in the overall score. If `NULL` the
+  default configuration is used.
 
 ## Value
 
@@ -27,12 +34,18 @@ A `usability_result` list (class `"usability_result"`) with:
 
 - n_vars:
 
-  Number of unique variable locations assessed.
+  Number of unique variable-level locations assessed (the label and
+  Define completeness checks).
+
+- overall_score:
+
+  The weighted mean of the per-indicator pass proportions, using the
+  configuration weights; `NA` if nothing is applicable.
 
 - summary:
 
-  A tibble with per-indicator pass/fail/warn counts and `pct_pass`
-  (proportion of passing rows).
+  A tibble with per-indicator pass/fail/warn/na counts and `pct_pass`
+  (passing rows over applicable rows, excluding `"na"`).
 
 - evidence:
 
@@ -41,33 +54,13 @@ A `usability_result` list (class `"usability_result"`) with:
 ## Examples
 
 ``` r
-ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#> ℹ Run context created: "R4S-20260804162220-11kz8bwc"
-meta <- data.frame(
-  dataset  = c("ADSL", "ADSL"),
-  variable = c("USUBJID", "AGE"),
-  label    = c("Unique Subject Identifier", "Age"),
-  origin   = c("CRF", "Derived"),
-  derivation = c(NA, "Derived from BRTHDTC"),
-  stringsAsFactors = FALSE
+ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+ev  <- suppressMessages(
+  usability_indicators(r4subdata::oncology_metadata, ctx = ctx)
 )
-ev  <- usability_indicators(meta, ctx = ctx)
-#> ✔ Evidence table created: 2 rows
-#> ✔ Evidence table created: 2 rows
-#> ✔ Evidence table created: 1 row
-#> ✔ Evidence table created: 1 row
-#> ✔ Bound 4 evidence tables: 6 total rows
+#> Error: 'oncology_metadata' is not an exported object from 'namespace:r4subdata'
 res <- usability_summary(ev)
+#> Error: object 'ev' not found
 print(res)
-#> 
-#> ── R4SUB Usability Assessment ──
-#> 
-#> Study: "STUDY01" | Variables assessed: 4
-#> 
-#> ✓ Variable Label Quality: 100% pass (2/2)
-#> ✓ Define-XML Completeness: 100% pass (2/2)
-#> ✓ Annotation Coverage: 100% pass (1/1)
-#> ✗ Reviewer Guide Presence: 0% pass (0/1)
-#> 
-#> ℹ Overall usability score: 75%
+#> Error: object 'res' not found
 ```

@@ -45,29 +45,13 @@ assessments (see
 ## Examples
 
 ``` r
-# \donttest{
-ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#> ℹ Run context created: "R4S-20260804162220-f7ayh65s"
-meta <- data.frame(
-  dataset    = c("ADSL", "ADSL", "ADAE"),
-  variable   = c("USUBJID", "AGE", "AETERM"),
-  label      = c("Unique Subject Identifier", "Age", "Adverse Event Term"),
-  origin     = c("CRF", "Derived", "CRF"),
-  derivation = c(NA, "Derived from BRTHDTC and RFSTDTC", NA),
-  stringsAsFactors = FALSE
-)
-assets <- c("ADRG", "define.xml")
-ev <- usability_indicators(meta, assets = assets, ctx = ctx)
-#> ✔ Evidence table created: 3 rows
-#> ✔ Evidence table created: 3 rows
-#> ✔ Evidence table created: 2 rows
-#> ✔ Evidence table created: 1 row
-#> ✔ Bound 4 evidence tables: 9 total rows
-nrow(ev)
-#> [1] 9
-table(ev$result)
-#> 
-#>   na pass 
-#>    1    8 
-# }
+ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+ev  <- suppressMessages(usability_indicators(
+  r4subdata::oncology_metadata,
+  assets = c("ADRG", "define.xml"),
+  ctx = ctx
+))
+#> Error: 'oncology_metadata' is not an exported object from 'namespace:r4subdata'
+table(ev$indicator_id, ev$result)
+#> Error: object 'ev' not found
 ```

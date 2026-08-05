@@ -36,17 +36,11 @@ A validated evidence tibble (see
 ## Examples
 
 ``` r
-ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#> ℹ Run context created: "R4S-20260804162219-wl4dieex"
-meta <- data.frame(
-  dataset    = c("ADSL", "ADSL", "ADSL"),
-  variable   = c("AGE", "SEX", "RACE"),
-  origin     = c("Derived", "CRF", "Derived"),
-  derivation = c("Derived from BRTHDTC", NA, NA),
-  stringsAsFactors = FALSE
+ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+ev  <- suppressMessages(
+  assess_annotation_coverage(r4subdata::oncology_metadata, ctx)
 )
-ev <- assess_annotation_coverage(meta, ctx)
-#> ✔ Evidence table created: 1 row
-ev$metric_value
-#> [1] 0.5
+#> Error: 'oncology_metadata' is not an exported object from 'namespace:r4subdata'
+ev[, c("asset_id", "result", "metric_value")]
+#> Error: object 'ev' not found
 ```

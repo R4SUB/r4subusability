@@ -62,7 +62,7 @@ guide check knows whether the guide was shipped.
 
 ctx <- r4subcore::r4sub_run_context(study_id = "CDISCPILOT01",
                                     environment = "UAT")
-#> ℹ Run context created: "R4S-20260804162222-wl4dieex"
+#> ℹ Run context created: "R4S-20260805052258-wl4dieex"
 
 ev <- usability_indicators(
   meta,
@@ -98,14 +98,14 @@ usability_summary(ev)
 #> 
 #> ── R4SUB Usability Assessment ──
 #> 
-#> Study: "CDISCPILOT01" | Variables assessed: 40
+#> Study: "CDISCPILOT01" | Variables assessed: 36
 #> 
 #> ✓ Variable Label Quality: 100% pass (36/36)
 #> ✗ Define-XML Completeness: 69.4% pass (25/36)
 #> ✗ Annotation Coverage: 0% pass (0/3)
 #> ✓ Reviewer Guide Presence: 100% pass (1/1)
 #> 
-#> ℹ Overall usability score: 67.4%
+#> ℹ Overall usability score: 64.3%
 ```
 
 The pattern here is typical. Labels are complete and the reviewer guide

@@ -130,7 +130,7 @@ override any element:</p>
 <span><span class="co">#&gt;  $ label_min_chars        : int 3</span></span>
 <span><span class="co">#&gt;  $ label_max_chars        : int 40</span></span>
 <span><span class="co">#&gt;  $ required_origins       : chr [1:2] "Derived" "Assigned"</span></span>
-<span><span class="co">#&gt;  $ reviewer_guide_keywords: chr [1:5] "ADRG" "SDRG" "reviewers_guide" "reviewer_guide" ...</span></span>
+<span><span class="co">#&gt;  $ reviewer_guide_keywords: chr [1:4] "ADRG" "SDRG" "reviewers_guide" "reviewer_guide"</span></span>
 <span><span class="co">#&gt;  $ weights                :List of 4</span></span>
 <span><span class="co">#&gt;   ..$ label_quality      : num 0.3</span></span>
 <span><span class="co">#&gt;   ..$ define_completeness: num 0.35</span></span>
@@ -174,7 +174,7 @@ reviewer guide asset (<code>"ADRG"</code>, <code>"SDRG"</code>,
 once per pipeline execution:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ctx</span> <span class="op">&lt;-</span> <span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/r4subcore/man/r4sub_run_context.html" class="external-link">r4sub_run_context</a></span><span class="op">(</span>study_id <span class="op">=</span> <span class="st">"STUDY01"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Run context created: <span style="color: #0000BB;">"R4S-20260804162224-wl4dieex"</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Run context created: <span style="color: #0000BB;">"R4S-20260805052300-wl4dieex"</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="u-001-variable-label-quality-assess_label_quality">U-001: Variable Label Quality
@@ -390,14 +390,14 @@ colour-coded console report:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">R4SUB Usability Assessment</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Study: <span style="color: #0000BB;">"STUDY01"</span> | Variables assessed: <span style="color: #0000BB;">6</span></span></span>
+<span><span class="co">#&gt; Study: <span style="color: #0000BB;">"STUDY01"</span> | Variables assessed: <span style="color: #0000BB;">3</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✓</span> Variable Label Quality: 100% pass (3/3)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✓</span> Define-XML Completeness: 100% pass (3/3)</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✗</span> Annotation Coverage: 50% pass (1/2)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✓</span> Annotation Coverage: 100% pass (1/1)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✓</span> Reviewer Guide Presence: 100% pass (1/1)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Overall usability score: 87.5%</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Overall usability score: 100%</span></span></code></pre></div>
 <p>You can also access the underlying summary data frame
 programmatically:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -405,10 +405,10 @@ programmatically:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 5</span></span></span>
 <span><span class="co">#&gt;   indicator_id indicator_name          n_pass n_fail pct_pass</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> U-001        Variable Label Quality       3      0      1  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> U-002        Define-XML Completeness      3      0      1  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> U-003        Annotation Coverage          1      0      0.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> U-004        Reviewer Guide Presence      1      0      1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> U-001        Variable Label Quality       3      0        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> U-002        Define-XML Completeness      3      0        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> U-003        Annotation Coverage          1      0        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> U-004        Reviewer Guide Presence      1      0        1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="customising-the-configuration">Customising the Configuration<a class="anchor" aria-label="anchor" href="#customising-the-configuration"></a>

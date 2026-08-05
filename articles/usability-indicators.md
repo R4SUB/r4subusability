@@ -43,7 +43,7 @@ str(cfg)
 #>  $ label_min_chars        : int 3
 #>  $ label_max_chars        : int 40
 #>  $ required_origins       : chr [1:2] "Derived" "Assigned"
-#>  $ reviewer_guide_keywords: chr [1:5] "ADRG" "SDRG" "reviewers_guide" "reviewer_guide" ...
+#>  $ reviewer_guide_keywords: chr [1:4] "ADRG" "SDRG" "reviewers_guide" "reviewer_guide"
 #>  $ weights                :List of 4
 #>   ..$ label_quality      : num 0.3
 #>   ..$ define_completeness: num 0.35
@@ -86,7 +86,7 @@ single context object is typically created once per pipeline execution:
 ``` r
 
 ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#> ℹ Run context created: "R4S-20260804162224-wl4dieex"
+#> ℹ Run context created: "R4S-20260805052300-wl4dieex"
 ```
 
 ## U-001: Variable Label Quality (`assess_label_quality()`)
@@ -305,14 +305,14 @@ print(res)
 #> 
 #> ── R4SUB Usability Assessment ──
 #> 
-#> Study: "STUDY01" | Variables assessed: 6
+#> Study: "STUDY01" | Variables assessed: 3
 #> 
 #> ✓ Variable Label Quality: 100% pass (3/3)
 #> ✓ Define-XML Completeness: 100% pass (3/3)
-#> ✗ Annotation Coverage: 50% pass (1/2)
+#> ✓ Annotation Coverage: 100% pass (1/1)
 #> ✓ Reviewer Guide Presence: 100% pass (1/1)
 #> 
-#> ℹ Overall usability score: 87.5%
+#> ℹ Overall usability score: 100%
 ```
 
 You can also access the underlying summary data frame programmatically:
@@ -323,10 +323,10 @@ res$summary[, c("indicator_id", "indicator_name", "n_pass", "n_fail", "pct_pass"
 #> # A tibble: 4 × 5
 #>   indicator_id indicator_name          n_pass n_fail pct_pass
 #>   <chr>        <chr>                    <int>  <int>    <dbl>
-#> 1 U-001        Variable Label Quality       3      0      1  
-#> 2 U-002        Define-XML Completeness      3      0      1  
-#> 3 U-003        Annotation Coverage          1      0      0.5
-#> 4 U-004        Reviewer Guide Presence      1      0      1
+#> 1 U-001        Variable Label Quality       3      0        1
+#> 2 U-002        Define-XML Completeness      3      0        1
+#> 3 U-003        Annotation Coverage          1      0        1
+#> 4 U-004        Reviewer Guide Presence      1      0        1
 ```
 
 ## Customising the Configuration

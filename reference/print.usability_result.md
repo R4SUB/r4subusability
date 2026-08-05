@@ -23,5 +23,5 @@ print(x, ...)
 ## Value
 
 Invisibly returns `x`. Called for its side effect of printing a summary
-of usability indicator scores (pass/fail/warn counts and overall
-proportion) to the console.
+of usability indicator scores (pass/fail/warn counts and the weighted
+overall score) to the console.

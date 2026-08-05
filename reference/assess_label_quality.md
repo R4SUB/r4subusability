@@ -37,16 +37,10 @@ A validated evidence tibble (see
 ## Examples
 
 ``` r
-ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#> ℹ Run context created: "R4S-20260804162219-78yvg5fi"
-meta <- data.frame(
-  dataset  = c("ADSL", "ADSL", "ADAE"),
-  variable = c("USUBJID", "AGE", "AETERM"),
-  label    = c("Unique Subject Identifier", "Age", ""),
-  stringsAsFactors = FALSE
-)
-ev <- assess_label_quality(meta, ctx)
-#> ✔ Evidence table created: 3 rows
-nrow(ev)
-#> [1] 3
+ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+ev  <- suppressMessages(assess_label_quality(r4subdata::adam_metadata, ctx))
+table(ev$result)
+#> 
+#> pass 
+#>   36 
 ```

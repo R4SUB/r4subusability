@@ -47,7 +47,7 @@ or for passing to downstream reporting functions.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">usability_summary</span><span class="op">(</span><span class="va">evidence</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">usability_summary</span><span class="op">(</span><span class="va">evidence</span>, config <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -58,6 +58,12 @@ or for passing to downstream reporting functions.</p>
 <dd><p>A validated evidence tibble from <code><a href="usability_indicators.html">usability_indicators()</a></code> or
 any of the individual assessment functions.</p></dd>
 
+
+<dt id="arg-config">config<a class="anchor" aria-label="anchor" href="#arg-config"></a></dt>
+<dd><p>A configuration list from <code><a href="usability_config_default.html">usability_config_default()</a></code>, used
+for the per-indicator weights in the overall score. If <code>NULL</code> the default
+configuration is used.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -65,11 +71,17 @@ any of the individual assessment functions.</p></dd>
 <dd><p>The study identifier from the evidence.</p></dd>
 
 <dt>n_vars</dt>
-<dd><p>Number of unique variable locations assessed.</p></dd>
+<dd><p>Number of unique variable-level locations assessed (the
+label and Define completeness checks).</p></dd>
+
+<dt>overall_score</dt>
+<dd><p>The weighted mean of the per-indicator pass
+proportions, using the configuration weights; <code>NA</code> if nothing is
+applicable.</p></dd>
 
 <dt>summary</dt>
-<dd><p>A tibble with per-indicator pass/fail/warn counts and
-<code>pct_pass</code> (proportion of passing rows).</p></dd>
+<dd><p>A tibble with per-indicator pass/fail/warn/na counts and
+<code>pct_pass</code> (passing rows over applicable rows, excluding <code>"na"</code>).</p></dd>
 
 <dt>evidence</dt>
 <dd><p>The original evidence tibble.</p></dd>
@@ -79,36 +91,15 @@ any of the individual assessment functions.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ctx</span> <span class="op">&lt;-</span> <span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/r4subcore/man/r4sub_run_context.html" class="external-link">r4sub_run_context</a></span><span class="op">(</span>study_id <span class="op">=</span> <span class="st">"STUDY01"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run context created: <span style="color: #0000BB;">"R4S-20260804162220-11kz8bwc"</span></span>
-<span class="r-in"><span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  dataset  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="st">"ADSL"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span>, <span class="st">"AGE"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  label    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Unique Subject Identifier"</span>, <span class="st">"Age"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  origin   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CRF"</span>, <span class="st">"Derived"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  derivation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"Derived from BRTHDTC"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ctx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/r4subcore/man/r4sub_run_context.html" class="external-link">r4sub_run_context</a></span><span class="op">(</span>study_id <span class="op">=</span> <span class="st">"STUDY01"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ev</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="usability_indicators.html">usability_indicators</a></span><span class="op">(</span><span class="fu">r4subdata</span><span class="fu">::</span><span class="va">oncology_metadata</span>, ctx <span class="op">=</span> <span class="va">ctx</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ev</span>  <span class="op">&lt;-</span> <span class="fu"><a href="usability_indicators.html">usability_indicators</a></span><span class="op">(</span><span class="va">meta</span>, ctx <span class="op">=</span> <span class="va">ctx</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Evidence table created: 2 rows</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Evidence table created: 2 rows</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Evidence table created: 1 row</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Evidence table created: 1 row</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Bound 4 evidence tables: 6 total rows</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'oncology_metadata' is not an exported object from 'namespace:r4subdata'</span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">usability_summary</span><span class="op">(</span><span class="va">ev</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'ev' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">R4SUB Usability Assessment</span> ──</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Study: <span style="color: #0000BB;">"STUDY01"</span> | Variables assessed: <span style="color: #0000BB;">4</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✓</span> Variable Label Quality: 100% pass (2/2)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✓</span> Define-XML Completeness: 100% pass (2/2)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✓</span> Annotation Coverage: 100% pass (1/1)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✗</span> Reviewer Guide Presence: 0% pass (0/1)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Overall usability score: 75%</span>
-<span class="r-in"><span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'res' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -38,19 +38,11 @@ A validated evidence tibble (see
 ## Examples
 
 ``` r
-ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#> ℹ Run context created: "R4S-20260804162219-ombeu7fd"
-meta <- data.frame(
-  dataset    = c("ADSL", "ADSL"),
-  variable   = c("USUBJID", "AGE"),
-  label      = c("Unique Subject Identifier", "Age"),
-  origin     = c("CRF", "Derived"),
-  derivation = c(NA, "Derived from BRTHDTC"),
-  codelist   = c(NA, NA),
-  stringsAsFactors = FALSE
+ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+ev  <- suppressMessages(
+  assess_define_completeness(r4subdata::oncology_metadata, ctx)
 )
-ev <- assess_define_completeness(meta, ctx)
-#> ✔ Evidence table created: 2 rows
-nrow(ev)
-#> [1] 2
+#> Error: 'oncology_metadata' is not an exported object from 'namespace:r4subdata'
+table(ev$result)
+#> Error: object 'ev' not found
 ```
