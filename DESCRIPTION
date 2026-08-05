@@ -23,7 +23,7 @@ Imports:
     utils
 Suggests:
     knitr,
-    r4subdata,
+    r4subdata (>= 0.1.2),
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
