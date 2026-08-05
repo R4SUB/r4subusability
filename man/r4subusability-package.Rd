@@ -6,11 +6,12 @@
 \alias{r4subusability-package}
 \title{r4subusability: Usability Indicators for Clinical Submission Readiness}
 \description{
-Quantifies reviewer-experience and usability indicators for clinical regulatory submissions. Assesses variable label quality, Define-XML (Extensible Markup Language) completeness, dataset annotation coverage, and reviewer guide presence. Emits standardised R4SUB (R for Regulatory Submission) evidence table rows via 'r4subcore' for integration with 'r4subscore' and 'r4subprofile'.
+Quantifies reviewer-experience and usability indicators for clinical regulatory submissions. Assesses variable label quality, Define-XML (Extensible Markup Language) completeness, dataset annotation coverage, and reviewer guide presence. Emits standardised R4SUB (Ready for Submission) evidence table rows via 'r4subcore' for integration with 'r4subscore' and 'r4subprofile'.
 }
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://r4sub.github.io/r4subusability/}
   \item \url{https://github.com/R4SUB/r4subusability}
   \item Report bugs at \url{https://github.com/R4SUB/r4subusability/issues}
 }

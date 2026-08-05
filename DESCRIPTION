@@ -19,8 +19,8 @@ Depends:
 Imports:
     cli,
     r4subcore,
-    rlang,
-    tibble
+    tibble,
+    utils
 Suggests:
     knitr,
     r4subdata,

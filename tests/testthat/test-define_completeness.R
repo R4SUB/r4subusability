@@ -14,7 +14,7 @@ make_meta <- function() {
 
 test_that("assess_define_completeness returns evidence tibble", {
   ev <- assess_define_completeness(make_meta(), make_ctx())
-  expect_s3_class(ev, "tbl_df")
+  expect_s3_class(ev, "data.frame")
 })
 
 test_that("assess_define_completeness fails missing derivation", {

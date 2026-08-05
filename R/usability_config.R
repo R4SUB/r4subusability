@@ -28,7 +28,7 @@ usability_config_default <- function() {
     label_max_chars        = 40L,
     required_origins       = c("Derived", "Assigned"),
     reviewer_guide_keywords = c("ADRG", "SDRG", "reviewers_guide",
-                                "reviewer_guide", "ARG"),
+                                "reviewer_guide"),
     weights = list(
       label_quality        = 0.30,
       define_completeness  = 0.35,

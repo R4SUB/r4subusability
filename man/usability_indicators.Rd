@@ -29,20 +29,13 @@ combined evidence table. This is the primary entry point for the
 \code{r4subusability} package.
 }
 \examples{
-\donttest{
-ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-meta <- data.frame(
-  dataset    = c("ADSL", "ADSL", "ADAE"),
-  variable   = c("USUBJID", "AGE", "AETERM"),
-  label      = c("Unique Subject Identifier", "Age", "Adverse Event Term"),
-  origin     = c("CRF", "Derived", "CRF"),
-  derivation = c(NA, "Derived from BRTHDTC and RFSTDTC", NA),
-  stringsAsFactors = FALSE
-)
-assets <- c("ADRG", "define.xml")
-ev <- usability_indicators(meta, assets = assets, ctx = ctx)
-nrow(ev)
-table(ev$result)
-}
-
+\dontshow{if (requireNamespace("r4subdata", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+ev  <- suppressMessages(usability_indicators(
+  r4subdata::oncology_metadata,
+  assets = c("ADRG", "define.xml"),
+  ctx = ctx
+))
+table(ev$indicator_id, ev$result)
+\dontshow{\}) # examplesIf}
 }

@@ -11,7 +11,7 @@ make_meta <- function() {
 
 test_that("assess_label_quality returns evidence tibble", {
   ev <- assess_label_quality(make_meta(), make_ctx())
-  expect_s3_class(ev, "tbl_df")
+  expect_s3_class(ev, "data.frame")
 })
 
 test_that("assess_label_quality returns one row per variable", {

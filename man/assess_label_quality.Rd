@@ -25,14 +25,9 @@ and absence of prohibited characters. Results are returned as R4SUB evidence
 rows with \code{indicator_id = "U-001"}.
 }
 \examples{
-ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-meta <- data.frame(
-  dataset  = c("ADSL", "ADSL", "ADAE"),
-  variable = c("USUBJID", "AGE", "AETERM"),
-  label    = c("Unique Subject Identifier", "Age", ""),
-  stringsAsFactors = FALSE
-)
-ev <- assess_label_quality(meta, ctx)
-nrow(ev)
-
+\dontshow{if (requireNamespace("r4subdata", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+ev  <- suppressMessages(assess_label_quality(r4subdata::adam_metadata, ctx))
+table(ev$result)
+\dontshow{\}) # examplesIf}
 }

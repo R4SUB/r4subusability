@@ -9,7 +9,7 @@ test_that("assess_annotation_coverage returns evidence tibble", {
     stringsAsFactors = FALSE
   )
   ev <- assess_annotation_coverage(meta, make_ctx())
-  expect_s3_class(ev, "tbl_df")
+  expect_s3_class(ev, "data.frame")
 })
 
 test_that("assess_annotation_coverage one row per dataset", {

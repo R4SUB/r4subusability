@@ -24,15 +24,11 @@ Returns one evidence row per dataset summarising annotation coverage, with
 \code{indicator_id = "U-003"}.
 }
 \examples{
-ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-meta <- data.frame(
-  dataset    = c("ADSL", "ADSL", "ADSL"),
-  variable   = c("AGE", "SEX", "RACE"),
-  origin     = c("Derived", "CRF", "Derived"),
-  derivation = c("Derived from BRTHDTC", NA, NA),
-  stringsAsFactors = FALSE
+\dontshow{if (requireNamespace("r4subdata", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+ev  <- suppressMessages(
+  assess_annotation_coverage(r4subdata::oncology_metadata, ctx)
 )
-ev <- assess_annotation_coverage(meta, ctx)
-ev$metric_value
-
+ev[, c("asset_id", "result", "metric_value")]
+\dontshow{\}) # examplesIf}
 }

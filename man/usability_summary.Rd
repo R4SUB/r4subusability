@@ -4,19 +4,27 @@
 \alias{usability_summary}
 \title{Summarise Usability Evidence}
 \usage{
-usability_summary(evidence)
+usability_summary(evidence, config = NULL)
 }
 \arguments{
 \item{evidence}{A validated evidence tibble from \code{\link[=usability_indicators]{usability_indicators()}} or
 any of the individual assessment functions.}
+
+\item{config}{A configuration list from \code{\link[=usability_config_default]{usability_config_default()}}, used
+for the per-indicator weights in the overall score. If \code{NULL} the default
+configuration is used.}
 }
 \value{
 A \code{usability_result} list (class \code{"usability_result"}) with:
 \describe{
 \item{study_id}{The study identifier from the evidence.}
-\item{n_vars}{Number of unique variable locations assessed.}
-\item{summary}{A tibble with per-indicator pass/fail/warn counts and
-\code{pct_pass} (proportion of passing rows).}
+\item{n_vars}{Number of unique variable-level locations assessed (the
+label and Define completeness checks).}
+\item{overall_score}{The weighted mean of the per-indicator pass
+proportions, using the configuration weights; \code{NA} if nothing is
+applicable.}
+\item{summary}{A tibble with per-indicator pass/fail/warn/na counts and
+\code{pct_pass} (passing rows over applicable rows, excluding \code{"na"}).}
 \item{evidence}{The original evidence tibble.}
 }
 }
@@ -25,17 +33,12 @@ Produces a structured summary of usability evidence, suitable for printing
 or for passing to downstream reporting functions.
 }
 \examples{
-ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-meta <- data.frame(
-  dataset  = c("ADSL", "ADSL"),
-  variable = c("USUBJID", "AGE"),
-  label    = c("Unique Subject Identifier", "Age"),
-  origin   = c("CRF", "Derived"),
-  derivation = c(NA, "Derived from BRTHDTC"),
-  stringsAsFactors = FALSE
+\dontshow{if (requireNamespace("r4subdata", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+ev  <- suppressMessages(
+  usability_indicators(r4subdata::oncology_metadata, ctx = ctx)
 )
-ev  <- usability_indicators(meta, ctx = ctx)
 res <- usability_summary(ev)
 print(res)
-
+\dontshow{\}) # examplesIf}
 }

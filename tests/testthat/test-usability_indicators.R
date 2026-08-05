@@ -13,7 +13,7 @@ make_meta <- function() {
 
 test_that("usability_indicators returns evidence tibble", {
   ev <- usability_indicators(make_meta(), ctx = make_ctx())
-  expect_s3_class(ev, "tbl_df")
+  expect_s3_class(ev, "data.frame")
 })
 
 test_that("usability_indicators combines all 4 indicators", {

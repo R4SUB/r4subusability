@@ -26,17 +26,11 @@ variables, and codelist reference where applicable). Results are returned as
 R4SUB evidence rows with \code{indicator_id = "U-002"}.
 }
 \examples{
-ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-meta <- data.frame(
-  dataset    = c("ADSL", "ADSL"),
-  variable   = c("USUBJID", "AGE"),
-  label      = c("Unique Subject Identifier", "Age"),
-  origin     = c("CRF", "Derived"),
-  derivation = c(NA, "Derived from BRTHDTC"),
-  codelist   = c(NA, NA),
-  stringsAsFactors = FALSE
+\dontshow{if (requireNamespace("r4subdata", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+ev  <- suppressMessages(
+  assess_define_completeness(r4subdata::oncology_metadata, ctx)
 )
-ev <- assess_define_completeness(meta, ctx)
-nrow(ev)
-
+table(ev$result)
+\dontshow{\}) # examplesIf}
 }

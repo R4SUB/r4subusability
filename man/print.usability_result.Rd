@@ -13,8 +13,8 @@
 }
 \value{
 Invisibly returns \code{x}. Called for its side effect of printing a
-summary of usability indicator scores (pass/fail/warn counts and overall
-proportion) to the console.
+summary of usability indicator scores (pass/fail/warn counts and the
+weighted overall score) to the console.
 }
 \description{
 Print a Usability Result Summary

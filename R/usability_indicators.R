@@ -1,3 +1,17 @@
+# Internal: validate a run context with a clear message.
+assert_run_context <- function(ctx) {
+  if (!inherits(ctx, "r4sub_run_context")) {
+    cli::cli_abort(
+      "{.arg ctx} must be a run context from {.fn r4subcore::r4sub_run_context}."
+    )
+  }
+}
+
+# Internal: the package version string, computed once per call rather than per row.
+usability_source_version <- function() {
+  as.character(utils::packageVersion("r4subusability"))
+}
+
 #' Assess Variable Label Quality
 #'
 #' Evaluates the quality of variable labels in a metadata data frame. Each
@@ -13,20 +27,15 @@
 #'
 #' @return A validated evidence tibble (see [r4subcore::as_evidence()]).
 #'
-#' @examples
-#' ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#' meta <- data.frame(
-#'   dataset  = c("ADSL", "ADSL", "ADAE"),
-#'   variable = c("USUBJID", "AGE", "AETERM"),
-#'   label    = c("Unique Subject Identifier", "Age", ""),
-#'   stringsAsFactors = FALSE
-#' )
-#' ev <- assess_label_quality(meta, ctx)
-#' nrow(ev)
+#' @examplesIf requireNamespace("r4subdata", quietly = TRUE)
+#' ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+#' ev  <- suppressMessages(assess_label_quality(r4subdata::adam_metadata, ctx))
+#' table(ev$result)
 #'
 #' @export
 assess_label_quality <- function(metadata, ctx, config = NULL) {
   if (is.null(config)) config <- usability_config_default()
+  assert_run_context(ctx)
   metadata  <- as.data.frame(metadata)
 
   required_cols <- c("dataset", "variable", "label")
@@ -34,6 +43,7 @@ assess_label_quality <- function(metadata, ctx, config = NULL) {
   if (length(missing) > 0L) {
     cli::cli_abort("metadata is missing columns: {.field {missing}}")
   }
+  pkg_ver <- usability_source_version()
 
   rows <- lapply(seq_len(nrow(metadata)), function(i) {
     ds  <- metadata$dataset[i]
@@ -65,7 +75,7 @@ assess_label_quality <- function(metadata, ctx, config = NULL) {
       asset_type       = "spec",
       asset_id         = ds,
       source_name      = "r4subusability",
-      source_version   = as.character(utils::packageVersion("r4subusability")),
+      source_version   = pkg_ver,
       indicator_id     = "U-001",
       indicator_name   = "Variable Label Quality",
       indicator_domain = "usability",
@@ -100,23 +110,17 @@ assess_label_quality <- function(metadata, ctx, config = NULL) {
 #'
 #' @return A validated evidence tibble (see [r4subcore::as_evidence()]).
 #'
-#' @examples
-#' ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#' meta <- data.frame(
-#'   dataset    = c("ADSL", "ADSL"),
-#'   variable   = c("USUBJID", "AGE"),
-#'   label      = c("Unique Subject Identifier", "Age"),
-#'   origin     = c("CRF", "Derived"),
-#'   derivation = c(NA, "Derived from BRTHDTC"),
-#'   codelist   = c(NA, NA),
-#'   stringsAsFactors = FALSE
+#' @examplesIf requireNamespace("r4subdata", quietly = TRUE)
+#' ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+#' ev  <- suppressMessages(
+#'   assess_define_completeness(r4subdata::oncology_metadata, ctx)
 #' )
-#' ev <- assess_define_completeness(meta, ctx)
-#' nrow(ev)
+#' table(ev$result)
 #'
 #' @export
 assess_define_completeness <- function(metadata, ctx, config = NULL) {
   if (is.null(config)) config <- usability_config_default()
+  assert_run_context(ctx)
   metadata <- as.data.frame(metadata)
 
   required_cols <- c("dataset", "variable", "label", "origin")
@@ -127,6 +131,7 @@ assess_define_completeness <- function(metadata, ctx, config = NULL) {
 
   if (!"derivation" %in% names(metadata)) metadata$derivation <- NA_character_
   if (!"codelist"   %in% names(metadata)) metadata$codelist   <- NA_character_
+  pkg_ver <- usability_source_version()
 
   rows <- lapply(seq_len(nrow(metadata)), function(i) {
     ds     <- metadata$dataset[i]
@@ -155,7 +160,7 @@ assess_define_completeness <- function(metadata, ctx, config = NULL) {
       asset_type       = "define",
       asset_id         = ds,
       source_name      = "r4subusability",
-      source_version   = as.character(utils::packageVersion("r4subusability")),
+      source_version   = pkg_ver,
       indicator_id     = "U-002",
       indicator_name   = "Define-XML Completeness",
       indicator_domain = "usability",
@@ -188,24 +193,27 @@ assess_define_completeness <- function(metadata, ctx, config = NULL) {
 #'
 #' @return A validated evidence tibble (see [r4subcore::as_evidence()]).
 #'
-#' @examples
-#' ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#' meta <- data.frame(
-#'   dataset    = c("ADSL", "ADSL", "ADSL"),
-#'   variable   = c("AGE", "SEX", "RACE"),
-#'   origin     = c("Derived", "CRF", "Derived"),
-#'   derivation = c("Derived from BRTHDTC", NA, NA),
-#'   stringsAsFactors = FALSE
+#' @examplesIf requireNamespace("r4subdata", quietly = TRUE)
+#' ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+#' ev  <- suppressMessages(
+#'   assess_annotation_coverage(r4subdata::oncology_metadata, ctx)
 #' )
-#' ev <- assess_annotation_coverage(meta, ctx)
-#' ev$metric_value
+#' ev[, c("asset_id", "result", "metric_value")]
 #'
 #' @export
 assess_annotation_coverage <- function(metadata, ctx, config = NULL) {
   if (is.null(config)) config <- usability_config_default()
+  assert_run_context(ctx)
   metadata <- as.data.frame(metadata)
 
+  required_cols <- c("dataset", "variable", "origin")
+  missing <- setdiff(required_cols, names(metadata))
+  if (length(missing) > 0L) {
+    cli::cli_abort("metadata is missing columns: {.field {missing}}")
+  }
+
   if (!"derivation" %in% names(metadata)) metadata$derivation <- NA_character_
+  pkg_ver <- usability_source_version()
 
   datasets <- unique(metadata$dataset)
 
@@ -239,7 +247,7 @@ assess_annotation_coverage <- function(metadata, ctx, config = NULL) {
       asset_type       = "spec",
       asset_id         = ds,
       source_name      = "r4subusability",
-      source_version   = as.character(utils::packageVersion("r4subusability")),
+      source_version   = pkg_ver,
       indicator_id     = "U-003",
       indicator_name   = "Annotation Coverage",
       indicator_domain = "usability",
@@ -283,10 +291,18 @@ assess_annotation_coverage <- function(metadata, ctx, config = NULL) {
 #' @export
 assess_reviewer_guide <- function(assets, ctx, config = NULL) {
   if (is.null(config)) config <- usability_config_default()
+  assert_run_context(ctx)
+  pkg_ver <- usability_source_version()
 
-  assets_lower   <- tolower(assets)
+  # Coerce to character and drop NA so a missing asset name cannot poison the
+  # match. Keywords are matched on a word boundary so that a code like "ADRG"
+  # matches "adrg.pdf" but not an unrelated substring in another file name.
+  assets_lower   <- tolower(as.character(assets))
+  assets_lower   <- assets_lower[!is.na(assets_lower)]
   keywords_lower <- tolower(config$reviewer_guide_keywords)
-  found          <- any(sapply(keywords_lower, function(k) any(grepl(k, assets_lower))))
+  found <- any(vapply(keywords_lower, function(k) {
+    any(grepl(paste0("\\b", k, "\\b"), assets_lower))
+  }, logical(1)))
 
   if (found) {
     result <- "pass"; severity <- "info"; metric <- 1
@@ -335,22 +351,14 @@ assess_reviewer_guide <- function(assets, ctx, config = NULL) {
 #' @return A validated evidence tibble combining results from all four
 #'   usability assessments (see [r4subcore::as_evidence()]).
 #'
-#' @examples
-#' \donttest{
-#' ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#' meta <- data.frame(
-#'   dataset    = c("ADSL", "ADSL", "ADAE"),
-#'   variable   = c("USUBJID", "AGE", "AETERM"),
-#'   label      = c("Unique Subject Identifier", "Age", "Adverse Event Term"),
-#'   origin     = c("CRF", "Derived", "CRF"),
-#'   derivation = c(NA, "Derived from BRTHDTC and RFSTDTC", NA),
-#'   stringsAsFactors = FALSE
-#' )
-#' assets <- c("ADRG", "define.xml")
-#' ev <- usability_indicators(meta, assets = assets, ctx = ctx)
-#' nrow(ev)
-#' table(ev$result)
-#' }
+#' @examplesIf requireNamespace("r4subdata", quietly = TRUE)
+#' ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
+#' ev  <- suppressMessages(usability_indicators(
+#'   r4subdata::oncology_metadata,
+#'   assets = c("ADRG", "define.xml"),
+#'   ctx = ctx
+#' ))
+#' table(ev$indicator_id, ev$result)
 #'
 #' @export
 usability_indicators <- function(metadata, assets = character(0), ctx, config = NULL) {
