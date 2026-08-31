@@ -4,7 +4,6 @@
 [![R-CMD-check](https://github.com/R4SUB/r4subusability/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/R4SUB/r4subusability/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/r4subusability)](https://CRAN.R-project.org/package=r4subusability)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/r4subusability)](https://CRAN.R-project.org/package=r4subusability)
-[![r-universe](https://r4sub.r-universe.dev/badges/r4subusability)](https://r4sub.r-universe.dev/r4subusability)
 <!-- badges: end -->
 
 **r4subusability** is the usability pillar package in the R4SUB ecosystem. It quantifies reviewer-experience indicators for clinical regulatory submissions, assessing variable label quality, Define-XML completeness, dataset annotation coverage, and reviewer guide presence.
