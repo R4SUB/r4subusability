@@ -61,6 +61,10 @@ usability_summary(results)
 | `assess_reviewer_guide()` | Check reviewer guide presence (U-004) |
 | `usability_summary()` | Tidy summary of usability results |
 
+## Maintained by
+
+R4SUB is part of the open-source work of [TechWorksLab](https://techworkslab.com) - clinical programming and regulatory submissions. Maintainer: Pawan Rama Mali.
+
 ## License
 
 MIT
