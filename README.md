@@ -68,3 +68,7 @@ R4SUB is part of the open-source work of [TechWorksLab](https://techworkslab.com
 ## License
 
 MIT
+
+## Further reading
+
+- [Define.xml is not documentation. It is the dataset's contract](https://techworkslab.com/insights-define-xml-as-contract), the Define-XML completeness this package scores, from TECHWORKSLAB.
