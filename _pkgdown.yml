@@ -18,7 +18,7 @@ navbar:
       aria-label: GitHub
 
 home:
-  title: "r4subusability — Usability Indicators for R4SUB"
+  title: "r4subusability: Usability Indicators for R4SUB"
   description: >
     Usability pillar indicators for the R4SUB ecosystem. Assesses variable
     label quality, Define-XML completeness, annotation coverage, and reviewer

@@ -23,7 +23,7 @@ library(r4subusability)
 The R4SUB framework organises submission-readiness evidence into four pillars:
 quality, traceability, risk, and **usability**. Usability measures how easy it
 is for a regulatory reviewer to understand and navigate your submission package
-— a dimension that all six major regulatory authority profiles allocate between
+ - a dimension that all six major regulatory authority profiles allocate between
 15 % and 20 % of the total submission-readiness weight.
 
 `r4subusability` implements the four indicators that make up this pillar:
@@ -52,13 +52,13 @@ str(cfg)
 
 Key parameters:
 
-- `label_min_chars` / `label_max_chars` — acceptable label length window
-  (default: 3–40 characters).
-- `required_origins` — origins that must have a derivation text
+- `label_min_chars` / `label_max_chars` - acceptable label length window
+  (default: 3-40 characters).
+- `required_origins` - origins that must have a derivation text
   (`"Derived"`, `"Assigned"`).
-- `reviewer_guide_keywords` — strings that identify a reviewer guide asset
+- `reviewer_guide_keywords` - strings that identify a reviewer guide asset
   (`"ADRG"`, `"SDRG"`, `"reviewers_guide"`, `"reviewer_guide"`, `"ARG"`).
-- `weights` — relative indicator weights summing to 1.
+- `weights` - relative indicator weights summing to 1.
 
 ```{r config_weights}
 cfg$weights
@@ -77,19 +77,19 @@ ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
 
 `assess_label_quality()` checks every variable label for:
 
-- **Presence** — a missing or empty label is a `fail` with `severity = "high"`.
-- **Minimum length** — a label shorter than `label_min_chars` is a `warn`.
-- **Maximum length** — a label longer than `label_max_chars` is a `warn`.
-- **Otherwise** — `pass` with `severity = "info"` and `metric_value = 1`.
+- **Presence** - a missing or empty label is a `fail` with `severity = "high"`.
+- **Minimum length** - a label shorter than `label_min_chars` is a `warn`.
+- **Maximum length** - a label longer than `label_max_chars` is a `warn`.
+- **Otherwise** - `pass` with `severity = "info"` and `metric_value = 1`.
 
 ```{r u001}
 meta_labels <- data.frame(
   dataset  = c("ADSL",    "ADSL", "ADAE"),
   variable = c("USUBJID", "AGE",  "AETERM"),
   label    = c(
-    "Unique Subject Identifier",  # OK — 26 chars
-    "Age",                         # OK — 3 chars (at minimum)
-    ""                             # fail — empty label
+    "Unique Subject Identifier",  # OK - 26 chars
+    "Age",                         # OK - 3 chars (at minimum)
+    ""                             # fail - empty label
   ),
   stringsAsFactors = FALSE
 )
@@ -123,7 +123,7 @@ ev_define <- assess_define_completeness(meta_define, ctx)
 ev_define[, c("location", "result", "severity", "message")]
 ```
 
-USUBJID and AETERM come from CRF — no derivation required, both pass. AGE is
+USUBJID and AETERM come from CRF - no derivation required, both pass. AGE is
 `"Derived"` and has a derivation text, so it also passes.
 
 A variable with `origin = "Derived"` but no derivation text would fail:
@@ -147,9 +147,9 @@ ev_bad[, c("location", "result", "severity", "message")]
 dataset it computes what proportion of derived variables have non-empty
 derivation text:
 
-- `>= 90 %` → `pass`
-- `70 – 89 %` → `warn`
-- `< 70 %` → `fail`
+- `>= 90 %` -> `pass`
+- `70 - 89 %` -> `warn`
+- `< 70 %` -> `fail`
 
 ```{r u003}
 meta_annot <- data.frame(
@@ -158,10 +158,10 @@ meta_annot <- data.frame(
   origin     = c("Derived","CRF",    "Derived","CRF",    "CRF"),
   derivation = c(
     "Derived from BRTHDTC and RFSTDTC",
-    NA,                                   # CRF — not counted
+    NA,                                   # CRF - not counted
     NA,                                   # Derived but not documented
-    NA,                                   # CRF — not counted
-    NA                                    # CRF — not counted
+    NA,                                   # CRF - not counted
+    NA                                    # CRF - not counted
   ),
   stringsAsFactors = FALSE
 )
@@ -170,7 +170,7 @@ ev_annot <- assess_annotation_coverage(meta_annot, ctx)
 ev_annot[, c("asset_id", "result", "metric_value", "message")]
 ```
 
-ADSL has 2 derived variables, only 1 annotated → 50 % → `fail`. ADAE has no
+ADSL has 2 derived variables, only 1 annotated -> 50 % -> `fail`. ADAE has no
 derived variables so coverage is not applicable (`na`).
 
 ## U-004: Reviewer Guide Presence (`assess_reviewer_guide()`)
@@ -260,7 +260,7 @@ The evidence table returned by any `r4subusability` function plugs directly
 into the rest of the R4SUB pipeline:
 
 ```r
-# Downstream — illustrative, requires r4subscore and r4subprofile
+# Downstream - illustrative, requires r4subscore and r4subprofile
 score  <- r4subscore::compute_score(ev_all)
 report <- r4subprofile::render_profile(score, authority = "FDA")
 ```
