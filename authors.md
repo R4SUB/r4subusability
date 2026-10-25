@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/R4SUB/r4subusability/blob/main/DESCRIPTION)
 
 Mali P (2026). *r4subusability: Usability Indicators for Clinical
-Submission Readiness*. R package version 0.2.0,
+Submission Readiness*. R package version 0.2.1,
 <https://r4sub.github.io/r4subusability/>.
 
     @Manual{,
       title = {r4subusability: Usability Indicators for Clinical Submission Readiness},
       author = {Pawan Rama Mali},
       year = {2026},
-      note = {R package version 0.2.0},
+      note = {R package version 0.2.1},
       url = {https://r4sub.github.io/r4subusability/},
     }

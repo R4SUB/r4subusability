@@ -9,7 +9,7 @@ or for passing to downstream reporting functions."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">r4subusability</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,15 +91,23 @@ applicable.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ctx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/r4subcore/man/r4sub_run_context.html" class="external-link">r4sub_run_context</a></span><span class="op">(</span>study_id <span class="op">=</span> <span class="st">"STUDY01"</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ctx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://r4sub.github.io/r4subcore/reference/r4sub_run_context.html" class="external-link">r4sub_run_context</a></span><span class="op">(</span>study_id <span class="op">=</span> <span class="st">"STUDY01"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ev</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="usability_indicators.html">usability_indicators</a></span><span class="op">(</span><span class="fu">r4subdata</span><span class="fu">::</span><span class="va">oncology_metadata</span>, ctx <span class="op">=</span> <span class="va">ctx</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="usability_indicators.html">usability_indicators</a></span><span class="op">(</span><span class="fu">r4subdata</span><span class="fu">::</span><span class="va"><a href="https://r4sub.github.io/r4subdata/reference/oncology_metadata.html" class="external-link">oncology_metadata</a></span>, ctx <span class="op">=</span> <span class="va">ctx</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'oncology_metadata' is not an exported object from 'namespace:r4subdata'</span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">usability_summary</span><span class="op">(</span><span class="va">ev</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'ev' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'res' not found</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">R4SUB Usability Assessment</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Study: <span style="color: #0000BB;">"STUDY01"</span> | Variables assessed: <span style="color: #0000BB;">32</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✓</span> Variable Label Quality: 100% pass (32/32)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✓</span> Define-XML Completeness: 90.6% pass (29/32)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✗</span> Annotation Coverage: 66.7% pass (2/3)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✗</span> Reviewer Guide Presence: 0% pass (0/1)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Overall usability score: 78.4%</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

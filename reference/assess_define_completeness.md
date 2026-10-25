@@ -22,7 +22,7 @@ assess_define_completeness(metadata, ctx, config = NULL)
 - ctx:
 
   A run context created by
-  [`r4subcore::r4sub_run_context()`](https://rdrr.io/pkg/r4subcore/man/r4sub_run_context.html).
+  [`r4subcore::r4sub_run_context()`](https://r4sub.github.io/r4subcore/reference/r4sub_run_context.html).
 
 - config:
 
@@ -33,7 +33,7 @@ assess_define_completeness(metadata, ctx, config = NULL)
 ## Value
 
 A validated evidence tibble (see
-[`r4subcore::as_evidence()`](https://rdrr.io/pkg/r4subcore/man/as_evidence.html)).
+[`r4subcore::as_evidence()`](https://r4sub.github.io/r4subcore/reference/as_evidence.html)).
 
 ## Examples
 
@@ -42,7 +42,8 @@ ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
 ev  <- suppressMessages(
   assess_define_completeness(r4subdata::oncology_metadata, ctx)
 )
-#> Error: 'oncology_metadata' is not an exported object from 'namespace:r4subdata'
 table(ev$result)
-#> Error: object 'ev' not found
+#> 
+#> fail pass 
+#>    3   29 
 ```

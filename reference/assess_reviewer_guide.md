@@ -20,7 +20,7 @@ assess_reviewer_guide(assets, ctx, config = NULL)
 - ctx:
 
   A run context created by
-  [`r4subcore::r4sub_run_context()`](https://rdrr.io/pkg/r4subcore/man/r4sub_run_context.html).
+  [`r4subcore::r4sub_run_context()`](https://r4sub.github.io/r4subcore/reference/r4sub_run_context.html).
 
 - config:
 
@@ -31,13 +31,13 @@ assess_reviewer_guide(assets, ctx, config = NULL)
 ## Value
 
 A validated evidence tibble with one row (see
-[`r4subcore::as_evidence()`](https://rdrr.io/pkg/r4subcore/man/as_evidence.html)).
+[`r4subcore::as_evidence()`](https://r4sub.github.io/r4subcore/reference/as_evidence.html)).
 
 ## Examples
 
 ``` r
 ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#> ℹ Run context created: "R4S-20260805052255-vj57qv4a"
+#> ℹ Run context created: "R4S-20261025204531-vj57qv4a"
 ev_present <- assess_reviewer_guide(c("ADRG", "define.xml"), ctx)
 #> ✔ Evidence table created: 1 row
 ev_missing <- assess_reviewer_guide(c("define.xml"), ctx)

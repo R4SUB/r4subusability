@@ -10,7 +10,7 @@ library(r4subusability)
 The R4SUB framework organises submission-readiness evidence into four
 pillars: quality, traceability, risk, and **usability**. Usability
 measures how easy it is for a regulatory reviewer to understand and
-navigate your submission package — a dimension that all six major
+navigate your submission package - a dimension that all six major
 regulatory authority profiles allocate between 15 % and 20 % of the
 total submission-readiness weight.
 
@@ -25,7 +25,7 @@ pillar:
 | U-004 | Reviewer Guide Presence | ADRG / SDRG detected in submission package |
 
 Every assessment function returns a validated R4SUB evidence table via
-[`r4subcore::as_evidence()`](https://rdrr.io/pkg/r4subcore/man/as_evidence.html),
+[`r4subcore::as_evidence()`](https://r4sub.github.io/r4subcore/reference/as_evidence.html),
 so the output is immediately compatible with the scoring and profiling
 layers.
 
@@ -53,14 +53,14 @@ str(cfg)
 
 Key parameters:
 
-- `label_min_chars` / `label_max_chars` — acceptable label length window
-  (default: 3–40 characters).
-- `required_origins` — origins that must have a derivation text
+- `label_min_chars` / `label_max_chars` - acceptable label length window
+  (default: 3-40 characters).
+- `required_origins` - origins that must have a derivation text
   (`"Derived"`, `"Assigned"`).
-- `reviewer_guide_keywords` — strings that identify a reviewer guide
+- `reviewer_guide_keywords` - strings that identify a reviewer guide
   asset (`"ADRG"`, `"SDRG"`, `"reviewers_guide"`, `"reviewer_guide"`,
   `"ARG"`).
-- `weights` — relative indicator weights summing to 1.
+- `weights` - relative indicator weights summing to 1.
 
 ``` r
 
@@ -86,7 +86,7 @@ single context object is typically created once per pipeline execution:
 ``` r
 
 ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#> ℹ Run context created: "R4S-20260805052300-wl4dieex"
+#> ℹ Run context created: "R4S-20261025204536-wl4dieex"
 ```
 
 ## U-001: Variable Label Quality (`assess_label_quality()`)
@@ -94,13 +94,13 @@ ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
 [`assess_label_quality()`](https://r4sub.github.io/r4subusability/reference/assess_label_quality.md)
 checks every variable label for:
 
-- **Presence** — a missing or empty label is a `fail` with
+- **Presence** - a missing or empty label is a `fail` with
   `severity = "high"`.
-- **Minimum length** — a label shorter than `label_min_chars` is a
+- **Minimum length** - a label shorter than `label_min_chars` is a
   `warn`.
-- **Maximum length** — a label longer than `label_max_chars` is a
+- **Maximum length** - a label longer than `label_max_chars` is a
   `warn`.
-- **Otherwise** — `pass` with `severity = "info"` and
+- **Otherwise** - `pass` with `severity = "info"` and
   `metric_value = 1`.
 
 ``` r
@@ -109,9 +109,9 @@ meta_labels <- data.frame(
   dataset  = c("ADSL",    "ADSL", "ADAE"),
   variable = c("USUBJID", "AGE",  "AETERM"),
   label    = c(
-    "Unique Subject Identifier",  # OK — 26 chars
-    "Age",                         # OK — 3 chars (at minimum)
-    ""                             # fail — empty label
+    "Unique Subject Identifier",  # OK - 26 chars
+    "Age",                         # OK - 3 chars (at minimum)
+    ""                             # fail - empty label
   ),
   stringsAsFactors = FALSE
 )
@@ -157,7 +157,7 @@ ev_define[, c("location", "result", "severity", "message")]
 #> 3  ADAE.AETERM   pass     info  AETERM: origin 'CRF' documented
 ```
 
-USUBJID and AETERM come from CRF — no derivation required, both pass.
+USUBJID and AETERM come from CRF - no derivation required, both pass.
 AGE is `"Derived"` and has a derivation text, so it also passes.
 
 A variable with `origin = "Derived"` but no derivation text would fail:
@@ -185,9 +185,9 @@ ev_bad[, c("location", "result", "severity", "message")]
 works at the **dataset level**. For each dataset it computes what
 proportion of derived variables have non-empty derivation text:
 
-- `>= 90 %` → `pass`
-- `70 – 89 %` → `warn`
-- `< 70 %` → `fail`
+- `>= 90 %` -\> `pass`
+- `70 - 89 %` -\> `warn`
+- `< 70 %` -\> `fail`
 
 ``` r
 
@@ -197,10 +197,10 @@ meta_annot <- data.frame(
   origin     = c("Derived","CRF",    "Derived","CRF",    "CRF"),
   derivation = c(
     "Derived from BRTHDTC and RFSTDTC",
-    NA,                                   # CRF — not counted
+    NA,                                   # CRF - not counted
     NA,                                   # Derived but not documented
-    NA,                                   # CRF — not counted
-    NA                                    # CRF — not counted
+    NA,                                   # CRF - not counted
+    NA                                    # CRF - not counted
   ),
   stringsAsFactors = FALSE
 )
@@ -213,8 +213,8 @@ ev_annot[, c("asset_id", "result", "metric_value", "message")]
 #> 2     ADAE     na          1.0                     ADAE: no derived variables
 ```
 
-ADSL has 2 derived variables, only 1 annotated → 50 % → `fail`. ADAE has
-no derived variables so coverage is not applicable (`na`).
+ADSL has 2 derived variables, only 1 annotated -\> 50 % -\> `fail`. ADAE
+has no derived variables so coverage is not applicable (`na`).
 
 ## U-004: Reviewer Guide Presence (`assess_reviewer_guide()`)
 
@@ -349,7 +349,7 @@ directly into the rest of the R4SUB pipeline:
 
 ``` r
 
-# Downstream — illustrative, requires r4subscore and r4subprofile
+# Downstream - illustrative, requires r4subscore and r4subprofile
 score  <- r4subscore::compute_score(ev_all)
 report <- r4subprofile::render_profile(score, authority = "FDA")
 ```

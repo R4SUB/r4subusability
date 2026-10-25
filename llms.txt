@@ -63,9 +63,21 @@ usability_summary(results)
 | [`assess_reviewer_guide()`](https://r4sub.github.io/r4subusability/reference/assess_reviewer_guide.md) | Check reviewer guide presence (U-004) |
 | [`usability_summary()`](https://r4sub.github.io/r4subusability/reference/usability_summary.md) | Tidy summary of usability results |
 
+## Maintained by
+
+R4SUB is part of the open-source work of
+[TechWorksLab](https://techworkslab.com) - clinical programming and
+regulatory submissions. Maintainer: Pawan Rama Mali.
+
 ## License
 
 MIT
+
+## Further reading
+
+- [Define.xml is not documentation. It is the dataset’s
+  contract](https://techworkslab.com/insights-define-xml-as-contract),
+  the Define-XML completeness this package scores, from TECHWORKSLAB.
 
 # Package index
 

@@ -20,7 +20,7 @@ assess_annotation_coverage(metadata, ctx, config = NULL)
 - ctx:
 
   A run context created by
-  [`r4subcore::r4sub_run_context()`](https://rdrr.io/pkg/r4subcore/man/r4sub_run_context.html).
+  [`r4subcore::r4sub_run_context()`](https://r4sub.github.io/r4subcore/reference/r4sub_run_context.html).
 
 - config:
 
@@ -31,7 +31,7 @@ assess_annotation_coverage(metadata, ctx, config = NULL)
 ## Value
 
 A validated evidence tibble (see
-[`r4subcore::as_evidence()`](https://rdrr.io/pkg/r4subcore/man/as_evidence.html)).
+[`r4subcore::as_evidence()`](https://r4sub.github.io/r4subcore/reference/as_evidence.html)).
 
 ## Examples
 
@@ -40,7 +40,9 @@ ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
 ev  <- suppressMessages(
   assess_annotation_coverage(r4subdata::oncology_metadata, ctx)
 )
-#> Error: 'oncology_metadata' is not an exported object from 'namespace:r4subdata'
 ev[, c("asset_id", "result", "metric_value")]
-#> Error: object 'ev' not found
+#>   asset_id result metric_value
+#> 1     ADSL   fail          0.5
+#> 2     ADRS   pass          1.0
+#> 3    ADTTE   pass          1.0
 ```

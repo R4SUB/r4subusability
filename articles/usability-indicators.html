@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">r4subusability</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@
 <p>The R4SUB framework organises submission-readiness evidence into four
 pillars: quality, traceability, risk, and <strong>usability</strong>.
 Usability measures how easy it is for a regulatory reviewer to
-understand and navigate your submission package — a dimension that all
+understand and navigate your submission package - a dimension that all
 six major regulatory authority profiles allocate between 15 % and 20 %
 of the total submission-readiness weight.</p>
 <p><code>r4subusability</code> implements the four indicators that make
@@ -114,7 +114,7 @@ up this pillar:</p>
 </tbody>
 </table>
 <p>Every assessment function returns a validated R4SUB evidence table
-via <code><a href="https://rdrr.io/pkg/r4subcore/man/as_evidence.html" class="external-link">r4subcore::as_evidence()</a></code>, so the output is immediately
+via <code><a href="https://r4sub.github.io/r4subcore/reference/as_evidence.html" class="external-link">r4subcore::as_evidence()</a></code>, so the output is immediately
 compatible with the scoring and profiling layers.</p>
 </div>
 <div class="section level2">
@@ -139,18 +139,18 @@ override any element:</p>
 <p>Key parameters:</p>
 <ul>
 <li>
-<code>label_min_chars</code> / <code>label_max_chars</code> —
-acceptable label length window (default: 3–40 characters).</li>
+<code>label_min_chars</code> / <code>label_max_chars</code> -
+acceptable label length window (default: 3-40 characters).</li>
 <li>
-<code>required_origins</code> — origins that must have a derivation
+<code>required_origins</code> - origins that must have a derivation
 text (<code>"Derived"</code>, <code>"Assigned"</code>).</li>
 <li>
-<code>reviewer_guide_keywords</code> — strings that identify a
+<code>reviewer_guide_keywords</code> - strings that identify a
 reviewer guide asset (<code>"ADRG"</code>, <code>"SDRG"</code>,
 <code>"reviewers_guide"</code>, <code>"reviewer_guide"</code>,
 <code>"ARG"</code>).</li>
 <li>
-<code>weights</code> — relative indicator weights summing to 1.</li>
+<code>weights</code> - relative indicator weights summing to 1.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cfg</span><span class="op">$</span><span class="va">weights</span></span>
@@ -173,8 +173,8 @@ reviewer guide asset (<code>"ADRG"</code>, <code>"SDRG"</code>,
 <code>r4subcore</code>. A single context object is typically created
 once per pipeline execution:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ctx</span> <span class="op">&lt;-</span> <span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/r4subcore/man/r4sub_run_context.html" class="external-link">r4sub_run_context</a></span><span class="op">(</span>study_id <span class="op">=</span> <span class="st">"STUDY01"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Run context created: <span style="color: #0000BB;">"R4S-20260805052300-wl4dieex"</span></span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ctx</span> <span class="op">&lt;-</span> <span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://r4sub.github.io/r4subcore/reference/r4sub_run_context.html" class="external-link">r4sub_run_context</a></span><span class="op">(</span>study_id <span class="op">=</span> <span class="st">"STUDY01"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Run context created: <span style="color: #0000BB;">"R4S-20261025204536-wl4dieex"</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="u-001-variable-label-quality-assess_label_quality">U-001: Variable Label Quality
@@ -184,16 +184,16 @@ once per pipeline execution:</p>
 for:</p>
 <ul>
 <li>
-<strong>Presence</strong> — a missing or empty label is a
+<strong>Presence</strong> - a missing or empty label is a
 <code>fail</code> with <code>severity = "high"</code>.</li>
 <li>
-<strong>Minimum length</strong> — a label shorter than
+<strong>Minimum length</strong> - a label shorter than
 <code>label_min_chars</code> is a <code>warn</code>.</li>
 <li>
-<strong>Maximum length</strong> — a label longer than
+<strong>Maximum length</strong> - a label longer than
 <code>label_max_chars</code> is a <code>warn</code>.</li>
 <li>
-<strong>Otherwise</strong> — <code>pass</code> with
+<strong>Otherwise</strong> - <code>pass</code> with
 <code>severity = "info"</code> and <code>metric_value = 1</code>.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -201,9 +201,9 @@ for:</p>
 <span>  dataset  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ADSL"</span>,    <span class="st">"ADSL"</span>, <span class="st">"ADAE"</span><span class="op">)</span>,</span>
 <span>  variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span>, <span class="st">"AGE"</span>,  <span class="st">"AETERM"</span><span class="op">)</span>,</span>
 <span>  label    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Unique Subject Identifier"</span>,  <span class="co"># OK — 26 chars</span></span>
-<span>    <span class="st">"Age"</span>,                         <span class="co"># OK — 3 chars (at minimum)</span></span>
-<span>    <span class="st">""</span>                             <span class="co"># fail — empty label</span></span>
+<span>    <span class="st">"Unique Subject Identifier"</span>,  <span class="co"># OK - 26 chars</span></span>
+<span>    <span class="st">"Age"</span>,                         <span class="co"># OK - 3 chars (at minimum)</span></span>
+<span>    <span class="st">""</span>                             <span class="co"># fail - empty label</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
@@ -246,7 +246,7 @@ Define-XML metadata is populated correctly. For variables whose
 <span><span class="co">#&gt; 1 ADSL.USUBJID   pass     info USUBJID: origin 'CRF' documented</span></span>
 <span><span class="co">#&gt; 2     ADSL.AGE   pass     info       AGE: derivation documented</span></span>
 <span><span class="co">#&gt; 3  ADAE.AETERM   pass     info  AETERM: origin 'CRF' documented</span></span></code></pre></div>
-<p>USUBJID and AETERM come from CRF — no derivation required, both pass.
+<p>USUBJID and AETERM come from CRF - no derivation required, both pass.
 AGE is <code>"Derived"</code> and has a derivation text, so it also
 passes.</p>
 <p>A variable with <code>origin = "Derived"</code> but no derivation
@@ -275,13 +275,13 @@ text would fail:</p>
 proportion of derived variables have non-empty derivation text:</p>
 <ul>
 <li>
-<code>&gt;= 90 %</code> → <code>pass</code>
+<code>&gt;= 90 %</code> -&gt; <code>pass</code>
 </li>
 <li>
-<code>70 – 89 %</code> → <code>warn</code>
+<code>70 - 89 %</code> -&gt; <code>warn</code>
 </li>
 <li>
-<code>&lt; 70 %</code> → <code>fail</code>
+<code>&lt; 70 %</code> -&gt; <code>fail</code>
 </li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -291,10 +291,10 @@ proportion of derived variables have non-empty derivation text:</p>
 <span>  origin     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Derived"</span>,<span class="st">"CRF"</span>,    <span class="st">"Derived"</span>,<span class="st">"CRF"</span>,    <span class="st">"CRF"</span><span class="op">)</span>,</span>
 <span>  derivation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"Derived from BRTHDTC and RFSTDTC"</span>,</span>
-<span>    <span class="cn">NA</span>,                                   <span class="co"># CRF — not counted</span></span>
+<span>    <span class="cn">NA</span>,                                   <span class="co"># CRF - not counted</span></span>
 <span>    <span class="cn">NA</span>,                                   <span class="co"># Derived but not documented</span></span>
-<span>    <span class="cn">NA</span>,                                   <span class="co"># CRF — not counted</span></span>
-<span>    <span class="cn">NA</span>                                    <span class="co"># CRF — not counted</span></span>
+<span>    <span class="cn">NA</span>,                                   <span class="co"># CRF - not counted</span></span>
+<span>    <span class="cn">NA</span>                                    <span class="co"># CRF - not counted</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
@@ -305,7 +305,7 @@ proportion of derived variables have non-empty derivation text:</p>
 <span><span class="co">#&gt;   asset_id result metric_value                                        message</span></span>
 <span><span class="co">#&gt; 1     ADSL   fail          0.5 ADSL: 50% of derived variables annotated (1/2)</span></span>
 <span><span class="co">#&gt; 2     ADAE     na          1.0                     ADAE: no derived variables</span></span></code></pre></div>
-<p>ADSL has 2 derived variables, only 1 annotated → 50 % →
+<p>ADSL has 2 derived variables, only 1 annotated -&gt; 50 % -&gt;
 <code>fail</code>. ADAE has no derived variables so coverage is not
 applicable (<code>na</code>).</p>
 </div>
@@ -427,14 +427,14 @@ programmatically:</p>
 <p>The evidence table returned by any <code>r4subusability</code>
 function plugs directly into the rest of the R4SUB pipeline:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Downstream — illustrative, requires r4subscore and r4subprofile</span></span>
+<code class="sourceCode R"><span><span class="co"># Downstream - illustrative, requires r4subscore and r4subprofile</span></span>
 <span><span class="va">score</span>  <span class="op">&lt;-</span> <span class="fu">r4subscore</span><span class="fu">::</span><span class="fu">compute_score</span><span class="op">(</span><span class="va">ev_all</span><span class="op">)</span></span>
 <span><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu">r4subprofile</span><span class="fu">::</span><span class="fu">render_profile</span><span class="op">(</span><span class="va">score</span>, authority <span class="op">=</span> <span class="st">"FDA"</span><span class="op">)</span></span></code></pre></div>
 <p>Evidence can also be persisted for audit trails:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".rds"</span><span class="op">)</span></span>
-<span><span class="fu">r4subcore</span><span class="fu">::</span><span class="fu">export_evidence</span><span class="op">(</span><span class="va">ev_all</span>, <span class="va">tmp</span>, format <span class="op">=</span> <span class="st">"rds"</span><span class="op">)</span></span>
-<span><span class="va">ev_reloaded</span> <span class="op">&lt;-</span> <span class="fu">r4subcore</span><span class="fu">::</span><span class="fu">import_evidence</span><span class="op">(</span><span class="va">tmp</span>, format <span class="op">=</span> <span class="st">"rds"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://r4sub.github.io/r4subcore/reference/export_evidence.html" class="external-link">export_evidence</a></span><span class="op">(</span><span class="va">ev_all</span>, <span class="va">tmp</span>, format <span class="op">=</span> <span class="st">"rds"</span><span class="op">)</span></span>
+<span><span class="va">ev_reloaded</span> <span class="op">&lt;-</span> <span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://r4sub.github.io/r4subcore/reference/import_evidence.html" class="external-link">import_evidence</a></span><span class="op">(</span><span class="va">tmp</span>, format <span class="op">=</span> <span class="st">"rds"</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

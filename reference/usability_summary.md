@@ -58,9 +58,17 @@ ctx <- suppressMessages(r4subcore::r4sub_run_context(study_id = "STUDY01"))
 ev  <- suppressMessages(
   usability_indicators(r4subdata::oncology_metadata, ctx = ctx)
 )
-#> Error: 'oncology_metadata' is not an exported object from 'namespace:r4subdata'
 res <- usability_summary(ev)
-#> Error: object 'ev' not found
 print(res)
-#> Error: object 'res' not found
+#> 
+#> ── R4SUB Usability Assessment ──
+#> 
+#> Study: "STUDY01" | Variables assessed: 32
+#> 
+#> ✓ Variable Label Quality: 100% pass (32/32)
+#> ✓ Define-XML Completeness: 90.6% pass (29/32)
+#> ✗ Annotation Coverage: 66.7% pass (2/3)
+#> ✗ Reviewer Guide Presence: 0% pass (0/1)
+#> 
+#> ℹ Overall usability score: 78.4%
 ```

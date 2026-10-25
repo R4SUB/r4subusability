@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">r4subusability</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,7 +76,7 @@ example CDISC pilot metadata in <code>r4subdata</code>, then measures
 it.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r4sub.github.io/r4subusability/">r4subusability</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/R4SUB/r4subdata" class="external-link">r4subdata</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r4sub.github.io/r4subdata/" class="external-link">r4subdata</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="building-a-define-style-view">Building a Define-style view<a class="anchor" aria-label="anchor" href="#building-a-define-style-view"></a>
 </h2>
@@ -119,9 +119,9 @@ evidence rows. The <code>assets</code> argument is the list of
 submission documents present, which is how the reviewer guide check
 knows whether the guide was shipped.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ctx</span> <span class="op">&lt;-</span> <span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/r4subcore/man/r4sub_run_context.html" class="external-link">r4sub_run_context</a></span><span class="op">(</span>study_id <span class="op">=</span> <span class="st">"CDISCPILOT01"</span>,</span>
+<code class="sourceCode R"><span><span class="va">ctx</span> <span class="op">&lt;-</span> <span class="fu">r4subcore</span><span class="fu">::</span><span class="fu"><a href="https://r4sub.github.io/r4subcore/reference/r4sub_run_context.html" class="external-link">r4sub_run_context</a></span><span class="op">(</span>study_id <span class="op">=</span> <span class="st">"CDISCPILOT01"</span>,</span>
 <span>                                    environment <span class="op">=</span> <span class="st">"UAT"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Run context created: <span style="color: #0000BB;">"R4S-20260805052258-wl4dieex"</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Run context created: <span style="color: #0000BB;">"R4S-20261025204534-wl4dieex"</span></span></span>
 <span></span>
 <span><span class="va">ev</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/usability_indicators.html">usability_indicators</a></span><span class="op">(</span></span>
 <span>  <span class="va">meta</span>,</span>
