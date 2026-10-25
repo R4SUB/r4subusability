@@ -1,3 +1,7 @@
+# r4subusability 0.2.1
+
+- Fix the pkgdown workflow so it resolves ecosystem dependencies, and polish metadata for CRAN.
+
 # r4subusability 0.2.0
 
 - Add vignette: "Case study: reviewer experience from ADaM metadata", which
