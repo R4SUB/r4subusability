@@ -1,5 +1,11 @@
 # r4subusability (development version)
 
+- Add `variable_name_conformance()`: a descriptive diagnostic that checks
+  variable and dataset names against the SAS v5 transport (XPT) naming
+  constraints (maximum length of eight characters; upper-case letters, digits,
+  and underscore only; not starting with a digit). The limits are configurable
+  and the result is a tidy tibble of non-conforming names with the reason. It
+  is purely additive and does not affect existing usability scores.
 - Add `label_consistency()`: a descriptive diagnostic that reports duplicate
   labels within a dataset, the same variable name carrying inconsistent labels
   across datasets, and missing dataset-level (table) labels, as a tidy tibble.
