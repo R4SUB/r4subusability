@@ -32,11 +32,11 @@ meta <- data.frame(
   variable = c("USUBJID", "AETERM"),
   label    = c("Unique Subject Identifier", "Reported Term for the Adverse Event"),
   origin   = c("Assigned", "CRF"),
-  type     = c("text", "text"),
   stringsAsFactors = FALSE
 )
 
-results <- usability_indicators(meta, study_id = "STUDY-001")
+ctx     <- r4subcore::r4sub_run_context(study_id = "STUDY-001")
+results <- usability_indicators(meta, assets = c("ADRG", "define.xml"), ctx = ctx)
 usability_summary(results)
 ```
 
