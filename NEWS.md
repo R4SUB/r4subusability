@@ -1,5 +1,9 @@
 # r4subusability (development version)
 
+- Add `label_consistency()`: a descriptive diagnostic that reports duplicate
+  labels within a dataset, the same variable name carrying inconsistent labels
+  across datasets, and missing dataset-level (table) labels, as a tidy tibble.
+  It is purely additive and does not affect existing usability scores.
 - Fix the README quick-start example, which called `usability_indicators()`
   with a non-existent `study_id` argument and omitted the required run context.
 - Correct the usability-indicators vignette: drop the stale `"ARG"` entry from
