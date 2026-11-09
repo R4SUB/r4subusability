@@ -1,5 +1,16 @@
 # Changelog
 
+## r4subusability (development version)
+
+- Fix the README quick-start example, which called
+  [`usability_indicators()`](https://r4sub.github.io/r4subusability/reference/usability_indicators.md)
+  with a non-existent `study_id` argument and omitted the required run
+  context.
+- Correct the usability-indicators vignette: drop the stale `"ARG"`
+  entry from the documented `reviewer_guide_keywords` defaults, and
+  describe the reviewer guide match as word-boundary (not substring)
+  matching, to match the code.
+
 ## r4subusability 0.2.1
 
 - Fix the pkgdown workflow so it resolves ecosystem dependencies, and

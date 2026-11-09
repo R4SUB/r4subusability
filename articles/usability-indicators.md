@@ -58,8 +58,7 @@ Key parameters:
 - `required_origins` - origins that must have a derivation text
   (`"Derived"`, `"Assigned"`).
 - `reviewer_guide_keywords` - strings that identify a reviewer guide
-  asset (`"ADRG"`, `"SDRG"`, `"reviewers_guide"`, `"reviewer_guide"`,
-  `"ARG"`).
+  asset (`"ADRG"`, `"SDRG"`, `"reviewers_guide"`, `"reviewer_guide"`).
 - `weights` - relative indicator weights summing to 1.
 
 ``` r
@@ -86,7 +85,7 @@ single context object is typically created once per pipeline execution:
 ``` r
 
 ctx <- r4subcore::r4sub_run_context(study_id = "STUDY01")
-#> ℹ Run context created: "R4S-20261025204536-wl4dieex"
+#> ℹ Run context created: "R4S-20261109175947-wl4dieex"
 ```
 
 ## U-001: Variable Label Quality (`assess_label_quality()`)
@@ -220,8 +219,9 @@ has no derived variables so coverage is not applicable (`na`).
 
 [`assess_reviewer_guide()`](https://r4sub.github.io/r4subusability/reference/assess_reviewer_guide.md)
 checks a character vector of asset names for any keyword that matches
-`reviewer_guide_keywords` (case-insensitive substring match). It returns
-a single evidence row.
+`reviewer_guide_keywords` (case-insensitive, matched on a word boundary
+so that `"ADRG"` matches `"adrg.pdf"` but not an unrelated substring).
+It returns a single evidence row.
 
 ``` r
 
