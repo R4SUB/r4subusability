@@ -57,7 +57,7 @@ Key parameters:
 - `required_origins` - origins that must have a derivation text
   (`"Derived"`, `"Assigned"`).
 - `reviewer_guide_keywords` - strings that identify a reviewer guide asset
-  (`"ADRG"`, `"SDRG"`, `"reviewers_guide"`, `"reviewer_guide"`, `"ARG"`).
+  (`"ADRG"`, `"SDRG"`, `"reviewers_guide"`, `"reviewer_guide"`).
 - `weights` - relative indicator weights summing to 1.
 
 ```{r config_weights}
@@ -176,8 +176,9 @@ derived variables so coverage is not applicable (`na`).
 ## U-004: Reviewer Guide Presence (`assess_reviewer_guide()`)
 
 `assess_reviewer_guide()` checks a character vector of asset names for any
-keyword that matches `reviewer_guide_keywords` (case-insensitive substring
-match). It returns a single evidence row.
+keyword that matches `reviewer_guide_keywords` (case-insensitive, matched on a
+word boundary so that `"ADRG"` matches `"adrg.pdf"` but not an unrelated
+substring). It returns a single evidence row.
 
 ```{r u004_pass}
 # Submission package includes an ADRG
