@@ -61,6 +61,30 @@ usability_summary(results)
 | `assess_reviewer_guide()` | Check reviewer guide presence (U-004) |
 | `usability_summary()` | Tidy summary of usability results |
 
+## Diagnostics
+
+Alongside the scored indicators, the package provides standalone diagnostics. These are descriptive aids: they return a tidy tibble of findings and do **not** emit R4SUB evidence rows or change the U-001..U-004 indicator scores.
+
+| Function | Purpose |
+|---|---|
+| `label_consistency()` | Report label-consistency problems in variable metadata: duplicate labels within a dataset, the same variable name carrying inconsistent labels across datasets, and missing dataset-level (table) labels |
+| `variable_name_conformance()` | Check variable and dataset names against the SAS v5 transport (XPT) naming constraints: maximum length (eight characters by default), permitted characters (upper-case letters, digits, and underscore), and no leading digit |
+
+```r
+meta <- data.frame(
+  dataset  = c("ADSL", "ADSL", "ADAE", "ADAE"),
+  variable = c("USUBJID", "SUBJID", "USUBJID", "AETERM"),
+  label    = c("Subject ID", "Subject ID",
+               "Unique Subject Identifier", "Reported Term"),
+  stringsAsFactors = FALSE
+)
+label_consistency(meta)
+
+variable_name_conformance(c("USUBJID", "SUBJECTID", "2VISIT", "AE_TERM"))
+```
+
+`variable_name_conformance()` accepts a character vector or a data frame (whose column names are checked), and its limits are configurable (`max_length`, `allowed_chars`, `allow_leading_digit`) for other naming conventions such as the longer SAS V8/V9 limit.
+
 ## Maintained by
 
 R4SUB is part of the open-source work of [TechWorksLab](https://techworkslab.com) - clinical programming and regulatory submissions. Maintainer: Pawan Rama Mali.
