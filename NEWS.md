@@ -1,5 +1,12 @@
 # r4subusability (development version)
 
+- Add `variable_attribute_consistency()`: a descriptive diagnostic that reports
+  variables whose data attributes (`type`, `length`, `format`) drift across the
+  datasets in which they appear. A variable name shared by several datasets is
+  expected to carry the same type, length, and format everywhere; mismatches
+  are reported as a tidy tibble, one row per affected dataset per attribute.
+  The attributes checked are configurable and absent columns are skipped. It is
+  purely additive and does not affect existing usability scores.
 - Add `variable_name_conformance()`: a descriptive diagnostic that checks
   variable and dataset names against the SAS v5 transport (XPT) naming
   constraints (maximum length of eight characters; upper-case letters, digits,
