@@ -69,6 +69,7 @@ Alongside the scored indicators, the package provides standalone diagnostics. Th
 |---|---|
 | `label_consistency()` | Report label-consistency problems in variable metadata: duplicate labels within a dataset, the same variable name carrying inconsistent labels across datasets, and missing dataset-level (table) labels |
 | `variable_name_conformance()` | Check variable and dataset names against the SAS v5 transport (XPT) naming constraints: maximum length (eight characters by default), permitted characters (upper-case letters, digits, and underscore), and no leading digit |
+| `variable_attribute_consistency()` | Report variables whose data attributes (`type`, `length`, `format`) drift across the datasets in which they appear; a variable shared by several datasets is expected to carry the same attributes everywhere |
 
 ```r
 meta <- data.frame(
@@ -81,6 +82,15 @@ meta <- data.frame(
 label_consistency(meta)
 
 variable_name_conformance(c("USUBJID", "SUBJECTID", "2VISIT", "AE_TERM"))
+
+attr_meta <- data.frame(
+  dataset  = c("ADSL", "ADAE", "ADSL", "ADAE"),
+  variable = c("USUBJID", "USUBJID", "AGE", "AGE"),
+  type     = c("Char", "Char", "Num", "Char"),
+  length   = c(20, 40, 8, 8),
+  stringsAsFactors = FALSE
+)
+variable_attribute_consistency(attr_meta)
 ```
 
 `variable_name_conformance()` accepts a character vector or a data frame (whose column names are checked), and its limits are configurable (`max_length`, `allowed_chars`, `allow_leading_digit`) for other naming conventions such as the longer SAS V8/V9 limit.
