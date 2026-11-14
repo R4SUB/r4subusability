@@ -60,6 +60,24 @@ usability_summary(results)
 | `assess_annotation_coverage()` | Check annotation coverage (U-003) |
 | `assess_reviewer_guide()` | Check reviewer guide presence (U-004) |
 | `usability_summary()` | Tidy summary of usability results |
+| `usability_report()` | Run every scored indicator and advisory diagnostic over one metadata frame and assemble a single consolidated report |
+
+## Consolidated report
+
+`usability_report()` orchestrates the whole package in one call: it runs the
+four scored indicators and the advisory diagnostics over a single metadata
+frame and assembles a tidy per-check summary, one combined findings frame, and
+the R4SUB evidence. It invents no new criteria -- the overall score is exactly
+the weighted `usability_summary()` score over the scored indicators, and the
+diagnostics contribute descriptive finding counts only.
+
+```r
+ctx <- r4subcore::r4sub_run_context(study_id = "STUDY-001")
+rep <- usability_report(meta, assets = c("ADRG", "define.xml"), ctx = ctx)
+rep$checks     # per-check pass/warn/fail/na and finding counts
+rep$findings   # combined offending items across all checks
+print(rep)
+```
 
 ## Diagnostics
 

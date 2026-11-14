@@ -41,6 +41,13 @@ reference:
     contents:
       - usability_summary
       - print.usability_result
+      - usability_report
+      - print.usability_report
+  - title: "Diagnostics"
+    contents:
+      - label_consistency
+      - variable_name_conformance
+      - variable_attribute_consistency
 
 footer:
   structure:
