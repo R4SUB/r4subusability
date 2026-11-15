@@ -1,5 +1,16 @@
 # r4subusability (development version)
 
+- Add `usability_report()`: a consolidated rollup that runs every usability
+  check in the package over one metadata frame in a single call and assembles
+  the results into one `usability_report` object. It orchestrates the scored
+  indicators (`usability_indicators()`, U-001..U-004) and the advisory
+  diagnostics (`label_consistency()`, `variable_name_conformance()`,
+  `variable_attribute_consistency()`), returning a tidy per-check summary
+  (pass/warn/fail/na counts and finding counts), a single combined findings
+  frame of the offending items, and the combined R4SUB evidence. It invents no
+  new criteria: the overall score is exactly the weighted score from
+  `usability_summary()` over the scored indicators, and the diagnostics
+  contribute descriptive finding counts only. A `print()` method is included.
 - Add `variable_attribute_consistency()`: a descriptive diagnostic that reports
   variables whose data attributes (`type`, `length`, `format`) drift across the
   datasets in which they appear. A variable name shared by several datasets is
