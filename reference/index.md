@@ -27,3 +27,17 @@
   : Summarise Usability Evidence
 - [`print(`*`<usability_result>`*`)`](https://r4sub.github.io/r4subusability/reference/print.usability_result.md)
   : Print a Usability Result Summary
+- [`usability_report()`](https://r4sub.github.io/r4subusability/reference/usability_report.md)
+  : Consolidated Usability Report
+- [`print(`*`<usability_report>`*`)`](https://r4sub.github.io/r4subusability/reference/print.usability_report.md)
+  : Print a Consolidated Usability Report
+
+## Diagnostics
+
+- [`label_consistency()`](https://r4sub.github.io/r4subusability/reference/label_consistency.md)
+  : Diagnose Variable Label Consistency
+- [`variable_name_conformance()`](https://r4sub.github.io/r4subusability/reference/variable_name_conformance.md)
+  : Check Variable and Dataset Names Against SAS v5 Transport
+  Constraints
+- [`variable_attribute_consistency()`](https://r4sub.github.io/r4subusability/reference/variable_attribute_consistency.md)
+  : Diagnose Cross-Dataset Variable Attribute Consistency
